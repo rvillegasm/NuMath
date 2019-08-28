@@ -1,1 +1,1 @@
-# Numalizer
+# NuMath
