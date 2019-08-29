@@ -1,0 +1,15 @@
+# cmake generated files
+CMakeLists.txt.user
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+Testing
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+_deps
+
+# build directory in case the user prefers to build the proyect that way
+build/
