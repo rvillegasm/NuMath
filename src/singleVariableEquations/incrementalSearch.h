@@ -1,9 +1,12 @@
 #pragma once
+#include <stdbool.h>
 
 /* Representation of a pair. It's Fields are first and last. */
 typedef struct Pair {
     double first;
     double last;
+    bool finished;
+    
 } Pair;
 
 /**
