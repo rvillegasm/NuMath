@@ -18,6 +18,9 @@ set(SOURCES src/main_test.c
 
 add_executable(NuMath ${SOURCES})
 
+# Link to math library on linux
+target_link_libraries(NuMath m)
+
 # useful links: 
 # https://medium.com/@onur.dundar1/cmake-tutorial-585dd180109b
 # http://www.thebitbangtheory.com/2011/11/how-to-openmp-cmake/ 

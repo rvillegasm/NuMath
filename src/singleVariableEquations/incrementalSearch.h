@@ -1,13 +1,20 @@
 #pragma once
+
 #include <stdbool.h>
 
-/* Representation of a pair. It's Fields are first and last. */
-typedef struct Pair {
+/** 
+ * Representation of an interval. It's Fields are:
+ * first (double): The initial value of the interval.
+ * last (double): The final value fo the interval.
+ * successful (bool): If an interval (or root) could actually be found.
+ * isRoot (bool): If the two values represent a root instead of an interval. 
+ */
+typedef struct Interval {
     double first;
     double last;
-    bool finished;
-    
-} Pair;
+    bool wasSuccessful;
+    bool isRoot;
+} Interval;
 
 /**
  * Function that analizes a single-variable mathematical function and
@@ -20,7 +27,7 @@ typedef struct Pair {
  *     nIter: Max number of iterations.
  * 
  * Returns:
- *     Pair containing the starting and final values of the interval, if it finds one.
- *     TODO: Otherwise, STILL TO BE DETERMINED
+ *     Interval containing the starting and final values of the interval, if it finds one,
+ *     or a pair of two equal numbers if it finds a root.
  */
-Pair incrementalSearch(double (*func)(double), double x0, double delta, int nIter);
+Interval incrementalSearch(double (*func)(double), double x0, double delta, int nIter);
