@@ -1,3 +1,4 @@
+#include <stddef.h>
 #include "incrementalSearch.h"
 
 /*
@@ -27,20 +28,22 @@
     so the algorithm returns an interval from 0 to 0, 
     and we specify that it wasn't successful.
  */
-Interval incrementalSearch(double (*func)(double), double x0, double delta, int nIter) {
+int incrementalSearch(double (*func)(double), double x0, double delta, int nIter, double *retVal0, double *retVal1) {
     
     double fx0, x1, fx1;
-    Interval interval = {0, 0, false, false};
+    // Interval interval = {0, 0, false, false};
     
     fx0 = func(x0);
     if (fx0 == 0) {
         // x0 is a root
-        interval.first = x0;
-        interval.last = x0;
-        interval.wasSuccessful = true;
-        interval.isRoot = true;
+        *retVal0 = x0;
+        retVal1 = NULL;
+        // interval.first = x0;
+        // interval.last = x0;
+        // interval.wasSuccessful = true;
+        // interval.isRoot = true;
 
-        return interval;
+        return nIter;
     }
     else {
         x1 = x0 + delta;
@@ -54,22 +57,26 @@ Interval incrementalSearch(double (*func)(double), double x0, double delta, int 
 
         if (fx1 == 0) {
             // x1 is a root
-            interval.first = x1;
-            interval.last = x1;
-            interval.wasSuccessful = true; 
-            interval.isRoot = true;
+            *retVal1 = x1;
+            retVal0 = NULL;
+            // interval.first = x1;
+            // interval.last = x1;
+            // interval.wasSuccessful = true; 
+            // interval.isRoot = true;
 
-            return interval;
+            return nIter;
         }
         else if (fx0 * fx1 < 0) {
             // [x0, x1] contains a root
-            interval.first = x0;
-            interval.last = x1;
-            interval.wasSuccessful = true;
+            *retVal0 = x0;
+            *retVal1 = x1;
+            // interval.first = x0;
+            // interval.last = x1;
+            // interval.wasSuccessful = true;
 
-            return interval;
+            return nIter;
         }
         // The algorithm wasn't successful
-        return interval;
+        return NULL;
     }    
 }

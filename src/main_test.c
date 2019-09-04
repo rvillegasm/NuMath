@@ -6,8 +6,12 @@ double f(double x);
 
 int main() {
 
-    Interval interval = incrementalSearch(f, 1, 0.0001, 25000);
-    if(interval.wasSuccessful){
+    double start, finish;
+
+    if(incrementalSearch(f, -1, 0.001, 25000, &start, &finish) == -1) {
+        printf("Nothing could be found\n");
+    }
+    else if (start == NULL){
         if (interval.isRoot) {
             printf("The root is %f\n", interval.first);    
         }
@@ -15,12 +19,9 @@ int main() {
             printf("The root is inside %f and %f\n", interval.first, interval.last);
         }
     }
-    else{
-        printf("Nothing could be found\n");
-    }
 }
 
 double f(double x) {
-    // return exp(2*x)+5*x;
-    return x-3;
+    return exp(2*x)+5*x;
+    // return x-3;
 }

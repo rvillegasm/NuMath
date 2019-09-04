@@ -30,4 +30,4 @@ typedef struct Interval {
  *     Interval containing the starting and final values of the interval, if it finds one,
  *     or a pair of two equal numbers if it finds a root.
  */
-Interval incrementalSearch(double (*func)(double), double x0, double delta, int nIter);
+int incrementalSearch(double (*func)(double), double x0, double delta, int nIter, double *retVal0, double *retVal1);
