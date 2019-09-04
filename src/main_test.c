@@ -11,17 +11,17 @@ int main() {
     if(incrementalSearch(f, -1, 0.001, 25000, &start, &finish) == -1) {
         printf("Nothing could be found\n");
     }
-    else if (start == NULL){
-        if (interval.isRoot) {
-            printf("The root is %f\n", interval.first);    
+    else if (start){
+        if (finish) {
+            printf("The root is %f\n", start);    
         }
         else {
-            printf("The root is inside %f and %f\n", interval.first, interval.last);
+            printf("The root is inside %f and %f\n", start, finish);
         }
     }
 }
 
 double f(double x) {
-    return exp(2*x)+5*x;
-    // return x-3;
+    //return exp(2*x)+5*x;
+     return x-3;
 }
