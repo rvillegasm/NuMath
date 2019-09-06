@@ -1,6 +1,7 @@
-#include <stdio.h>
-#include "singleVariableEquations/incrementalSearch.h"
 #include <math.h>
+#include <stdio.h>
+
+#include "singleVariableEquations/incrementalSearch.h"
 
 double f(double x);
 

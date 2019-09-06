@@ -14,7 +14,8 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 
 set(SOURCES src/main_test.c
             src/singleVariableEquations/incrementalSearch.c
-            src/singleVariableEquations/incrementalSearch.h)
+            src/singleVariableEquations/incrementalSearch.h
+            lib/interval.h)
 
 add_executable(NuMath ${SOURCES})
 
