@@ -1,11 +1,8 @@
 #include <math.h>
 #include "bisection.h"
+#include "../../lib/statusConstants.h"
 
 double bisection(double (*func)(double), double xi, double xu, int nIter, double tol, int *status) {
-    
-    const int EXACT_VALUE = 0;
-    const int APPROX_VALUE = 1;
-    const int FAILURE = -1;
 
     int count;
     double xm;
@@ -60,4 +57,7 @@ double bisection(double (*func)(double), double xi, double xu, int nIter, double
             return -1;
         }
     }
+    
+    *status = FAILURE;
+    return -1;
 }
