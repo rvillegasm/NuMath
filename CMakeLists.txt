@@ -17,6 +17,8 @@ set(SOURCES src/main_test.c
             src/singleVariableEquations/incrementalSearch.h
             src/singleVariableEquations/bisection.c
             src/singleVariableEquations/bisection.h
+            src/singleVariableEquations/falsePosition.c
+            src/singleVariableEquations/falsePosition.h
             lib/interval.h
             lib/statusConstants.h)
 
