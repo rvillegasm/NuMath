@@ -1,7 +1,5 @@
 #pragma once
 
-#include <stdbool.h>
-
 /** 
  * Representation of an interval. It's Fields are:
  * first (double): The initial value of the interval.

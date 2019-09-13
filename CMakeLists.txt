@@ -6,18 +6,18 @@ if(" ${CMAKE_SOURCE_DIR}" STREQUAL " ${CMAKE_BINARY_DIR}")
   You should create a separate directory for build files.")
 endif()
 
-project(NuMath C)
+project(NuMath)
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall")
+set(CMAKE_C_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 
-set(SOURCES src/main_test.c
-            src/singleVariableEquations/incrementalSearch.c
+set(SOURCES src/main_test.cpp
+            src/singleVariableEquations/incrementalSearch.cpp
             src/singleVariableEquations/incrementalSearch.h
-            src/singleVariableEquations/bisection.c
+            src/singleVariableEquations/bisection.cpp
             src/singleVariableEquations/bisection.h
-            src/singleVariableEquations/falsePosition.c
+            src/singleVariableEquations/falsePosition.cpp
             src/singleVariableEquations/falsePosition.h
             lib/interval.h
             lib/statusConstants.h)
@@ -25,7 +25,7 @@ set(SOURCES src/main_test.c
 add_executable(NuMath ${SOURCES})
 
 # Link to math library on linux
-target_link_libraries(NuMath m)
+# target_link_libraries(NuMath m)
 
 # useful links: 
 # https://medium.com/@onur.dundar1/cmake-tutorial-585dd180109b

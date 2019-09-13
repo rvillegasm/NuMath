@@ -33,6 +33,6 @@ int main() {
 }
 
 double f(double x) {
-    //return exp(2*x)+5*x;
-     return x-3;
+    return exp(2*x)+5*x;
+    //  return x-3;
 }
