@@ -1,6 +1,8 @@
 #include <math.h>
 #include "falsePosition.h"
+
 #include "../../lib/statusConstants.h"
+#include "../../lib/exceptions.h"
 
 double falsePosition(double (*func)(double), double xi, double xu, int nIter, double tol, int *status) {
 
@@ -22,7 +24,6 @@ double falsePosition(double (*func)(double), double xi, double xu, int nIter, do
         return xu;
     }
     else if (fxi * fxu < 0) {
-        //xm = (xi + xu)/2;
         xm = xi -((fxi*(xi-xu))/(fxi-fxu));
         fxm = func(xm);
         count = 1;
@@ -38,7 +39,6 @@ double falsePosition(double (*func)(double), double xi, double xu, int nIter, do
                 fxi = fxm;
             }
             lastXm = xm;
-           // xm = (xi + xu)/2;
             xm = xi -((fxi*(xi-xu))/(fxi-fxu));
             fxm = func(xm);
             error = fabs(xm - lastXm);
@@ -55,11 +55,12 @@ double falsePosition(double (*func)(double), double xi, double xu, int nIter, do
             return xm;
         }
         else {
+            // iterations were not enough to find a root
             *status = FAILURE;
-            return -1;
+            throw IterException();
         }
     }
-    
+    // the specified interval is not valid
     *status = FAILURE;
-    return -1;
+    throw IntervalException();
 }

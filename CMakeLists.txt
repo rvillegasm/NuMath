@@ -20,7 +20,8 @@ set(SOURCES src/main_test.cpp
             src/singleVariableEquations/falsePosition.cpp
             src/singleVariableEquations/falsePosition.h
             lib/interval.h
-            lib/statusConstants.h)
+            lib/statusConstants.h
+            lib/exceptions.h)
 
 add_executable(NuMath ${SOURCES})
 

@@ -1,6 +1,8 @@
 #include <math.h>
 #include "bisection.h"
+
 #include "../../lib/statusConstants.h"
+#include "../../lib/exceptions.h"
 
 double bisection(double (*func)(double), double xi, double xu, int nIter, double tol, int *status) {
 
@@ -53,11 +55,12 @@ double bisection(double (*func)(double), double xi, double xu, int nIter, double
             return xm;
         }
         else {
+            // iterations were not enough to find a root
             *status = FAILURE;
-            return -1;
+            throw IterException();
         }
     }
-    
+    // the specified interval is not valid
     *status = FAILURE;
-    return -1;
+    throw IntervalException();
 }
