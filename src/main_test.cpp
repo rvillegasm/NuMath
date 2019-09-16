@@ -2,8 +2,8 @@
 #include <stdio.h>
 
 #include "singleVariableEquations/incrementalSearch.h"
-#include "singleVariableEquations/bisection.h"
-#include "singleVariableEquations/falsePosition.h"
+#include "singleVariableEquations/closedMethods/bisection.h"
+#include "singleVariableEquations/closedMethods/falsePosition.h"
 
 #include "../lib/statusConstants.h"
 #include "../lib/exceptions.h"

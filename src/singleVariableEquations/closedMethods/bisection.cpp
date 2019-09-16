@@ -1,10 +1,10 @@
 #include <math.h>
-#include "falsePosition.h"
+#include "bisection.h"
 
-#include "../../lib/statusConstants.h"
-#include "../../lib/exceptions.h"
+#include "../../../lib/statusConstants.h"
+#include "../../../lib/exceptions.h"
 
-double falsePosition(double (*func)(double), double xi, double xu, int nIter, double tol, int *status) {
+double bisection(double (*func)(double), double xi, double xu, int nIter, double tol, int *status) {
 
     int count;
     double xm;
@@ -24,7 +24,7 @@ double falsePosition(double (*func)(double), double xi, double xu, int nIter, do
         return xu;
     }
     else if (fxi * fxu < 0) {
-        xm = xi -((fxi*(xi-xu))/(fxi-fxu));
+        xm = (xi + xu)/2;
         fxm = func(xm);
         count = 1;
         error = tol + 1;
@@ -39,7 +39,7 @@ double falsePosition(double (*func)(double), double xi, double xu, int nIter, do
                 fxi = fxm;
             }
             lastXm = xm;
-            xm = xi -((fxi*(xi-xu))/(fxi-fxu));
+            xm = (xi + xu)/2;
             fxm = func(xm);
             error = fabs(xm - lastXm);
             count++;

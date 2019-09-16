@@ -15,10 +15,10 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 set(SOURCES src/main_test.cpp
             src/singleVariableEquations/incrementalSearch.cpp
             src/singleVariableEquations/incrementalSearch.h
-            src/singleVariableEquations/bisection.cpp
-            src/singleVariableEquations/bisection.h
-            src/singleVariableEquations/falsePosition.cpp
-            src/singleVariableEquations/falsePosition.h
+            src/singleVariableEquations/closedMethods/bisection.cpp
+            src/singleVariableEquations/closedMethods/bisection.h
+            src/singleVariableEquations/closedMethods/falsePosition.cpp
+            src/singleVariableEquations/closedMethods/falsePosition.h
             lib/interval.h
             lib/statusConstants.h
             lib/exceptions.h)
