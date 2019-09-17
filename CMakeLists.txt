@@ -8,7 +8,9 @@ endif()
 
 project(NuMath)
 
-set(CMAKE_C_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
+set (CMAKE_CXX_STANDARD 11)
+
+# set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 
@@ -19,6 +21,8 @@ set(SOURCES src/main_test.cpp
             src/singleVariableEquations/closedMethods/bisection.h
             src/singleVariableEquations/closedMethods/falsePosition.cpp
             src/singleVariableEquations/closedMethods/falsePosition.h
+            src/singleVariableEquations/openMethods/fixedPoint.cpp
+            src/singleVariableEquations/openMethods/fixedPoint.h
             lib/interval.h
             lib/statusConstants.h
             lib/exceptions.h)
