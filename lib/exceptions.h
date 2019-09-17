@@ -21,3 +21,14 @@ struct IntervalException : public std::exception {
     }
 
 };
+
+/**
+ * Exception for when the derivative is zero. 
+ */
+struct DerivativeException : public std::exception {
+
+    const char* what() const noexcept {
+        return "Derivative equals 0. Possible multiple roots found";
+    }
+
+};

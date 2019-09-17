@@ -1,12 +1,13 @@
 #include <math.h>
 #include <stdio.h>
 
-// #include "singleVariableEquations/incrementalSearch.h"
-// #include "singleVariableEquations/closedMethods/bisection.h"
-// #include "singleVariableEquations/closedMethods/falsePosition.h"
+#include "singleVariableEquations/incrementalSearch.h"
+#include "singleVariableEquations/closedMethods/bisection.h"
+#include "singleVariableEquations/closedMethods/falsePosition.h"
 #include "singleVariableEquations/openMethods/fixedPoint.h"
+#include "singleVariableEquations/openMethods/newton.h"
 
-// #include "../lib/statusConstants.h"
+#include "../lib/statusConstants.h"
 #include "../lib/exceptions.h"
 
 #define TOLERANCE 10e-10
@@ -19,9 +20,13 @@ int main() {
     double root = 0;
     try
     {
-        root = fixedPoint(f, g, -0.5, 20, TOLERANCE);
+        root = newton(f, g, 1.3, 20, TOLERANCE);
     }
     catch(IterException &e)
+    {
+        printf("%s\n", e.what());
+    }
+    catch(DerivativeException &e)
     {
         printf("%s\n", e.what());
     }
@@ -71,9 +76,9 @@ int main() {
 double f(double x) {
     // return exp(2*x)+5*x;
     //  return x-3;
-    return x*exp(x)-pow(x,2)-5*x-3;
+    return exp(-pow(x,2)+1)-x*sin(2*x+3)-4*x+4;
 }
 
 double g(double x){
-    return 3/(exp(x)-x-5);
+    return -2*x*exp(-pow(x,2)+1)-sin(2*x+3)-2*x*cos(2*x+3)-4;
 }
