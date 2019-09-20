@@ -14,4 +14,4 @@
  * Returns:
  *     One of the roots inside the interval, or an approximation of it.
  */
-double fixedPoint(double (*func)(double), double (*gFunc)(double), double xa, int nIter, double tol);
+double fixedPoint(double (*func)(double), double (*gFunc)(double), double xa, int nIter, double tol, const char *errorType);

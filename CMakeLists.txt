@@ -23,6 +23,10 @@ set(SOURCES src/main_test.cpp
             src/singleVariableEquations/openMethods/fixedPoint.h
             src/singleVariableEquations/openMethods/newton.cpp
             src/singleVariableEquations/openMethods/newton.h
+            src/singleVariableEquations/openMethods/secant.cpp
+            src/singleVariableEquations/openMethods/secant.h
+            src/singleVariableEquations/openMethods/multipleRoots.cpp
+            src/singleVariableEquations/openMethods/multipleRoots.h
             lib/interval.h
             lib/statusConstants.h
             lib/exceptions.h)

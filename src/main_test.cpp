@@ -6,6 +6,8 @@
 #include "singleVariableEquations/closedMethods/falsePosition.h"
 #include "singleVariableEquations/openMethods/fixedPoint.h"
 #include "singleVariableEquations/openMethods/newton.h"
+#include "singleVariableEquations/openMethods/secant.h"
+#include "singleVariableEquations/openMethods/multipleRoots.h"
 
 #include "../lib/statusConstants.h"
 #include "../lib/exceptions.h"
@@ -14,19 +16,20 @@
 
 double f(double x);
 double g(double x);
+double g2(double x);
 
 int main() {
 
     double root = 0;
     try
     {
-        root = newton(f, g, 1.3, 20, TOLERANCE);
+        root = multipleRoots(f, g, g2, -1, 20, TOLERANCE, "rel");
     }
     catch(IterException &e)
     {
         printf("%s\n", e.what());
     }
-    catch(DerivativeException &e)
+    catch(DenominatorException &e)
     {
         printf("%s\n", e.what());
     }
@@ -75,10 +78,17 @@ int main() {
 
 double f(double x) {
     // return exp(2*x)+5*x;
-    //  return x-3;
-    return exp(-pow(x,2)+1)-x*sin(2*x+3)-4*x+4;
+    // return x-3;
+    return pow(x, 2);
+    // return exp(-pow(x,2)+1)-x*sin(2*x+3)-4*x+4;
 }
 
 double g(double x){
-    return -2*x*exp(-pow(x,2)+1)-sin(2*x+3)-2*x*cos(2*x+3)-4;
+    return 2*x;
+    // return -2*x*exp(-pow(x,2)+1)-sin(2*x+3)-2*x*cos(2*x+3)-4;
+}
+
+double g2(double x){
+    return 2;
+    // return -2*x*exp(-pow(x,2)+1)-sin(2*x+3)-2*x*cos(2*x+3)-4;
 }

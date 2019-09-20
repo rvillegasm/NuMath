@@ -16,4 +16,4 @@
  * Returns:
  *     One of the roots inside the interval, or an approximation of it.
  */
-double falsePosition(double (*func)(double), double xi, double xu, int nIter, double tol, int *status);
+double falsePosition(double (*func)(double), double xi, double xu, int nIter, double tol, const char *errorType);

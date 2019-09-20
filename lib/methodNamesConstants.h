@@ -1,0 +1,3 @@
+#pragma once
+
+const enum methodNames {BISECTION, FALSE_POSITION, FIXED_POINT, NEWTON, SECANT, MULT_ROOTS};

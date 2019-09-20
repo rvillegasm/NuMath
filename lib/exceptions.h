@@ -32,3 +32,14 @@ struct DerivativeException : public std::exception {
     }
 
 };
+
+/**
+ * Exception for when the denominator of the secant mehtod is zero. 
+ */
+struct DenominatorException : public std::exception {
+
+    const char* what() const noexcept {
+        return "Denominator equals 0. Possible multiple roots found";
+    }
+
+};
