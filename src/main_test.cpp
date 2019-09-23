@@ -96,62 +96,6 @@ int main() {
     
     }
 
-    // double root = 0;
-    // try
-    // {
-    //     root = multipleRoots(f, g, g2, -3.02, 2000, TOLERANCE, "abs");
-    // }
-    // catch(IterException &e)
-    // {
-    //     printf("%s\n", e.what());
-    //     return EXIT_FAILURE;
-    // }
-    // catch(DenominatorException &e)
-    // {
-    //     printf("%s\n", e.what());
-    //     return EXIT_FAILURE;
-    // }
-
-    // printf("%e\n", root);
-    
-
-    // Interval interval;
-    
-    // interval = incrementalSearch(f, -3.06, 0.4, 100);
-
-    // if(interval.wasSuccessful){
-    //     if (interval.isRoot) {
-    //         printf("The root is %f\n", interval.first);    
-    //     }
-    //     else {
-    //         printf("The root is inside %f and %f\n", interval.first, interval.last);
-            
-    //         int status;
-    //         double root;
-            
-    //         try {
-    //             root = bisection(f, interval.first, interval.last, 100, TOLERANCE, "abs");
-    //         }
-    //         catch (IterException &iterEx) {
-    //             printf("%s\n", iterEx.what());
-    //             return EXIT_FAILURE;
-    //         }
-    //         catch (IntervalException &intervEx) {
-    //             printf("%s\n", intervEx.what());
-    //             return EXIT_FAILURE;
-    //         }
-
-    //         if (status == EXACT_VALUE) {
-    //             printf("The exact root is: %e\n", root);
-    //         }
-    //         else if (status == APPROX_VALUE) {
-    //             printf("The root is: %e, with a tolerance of %.1e\n", root, TOLERANCE);
-    //         }
-    //     }
-    // }
-    // else{
-    //     printf("Nothing could be found\n");
-    // }
 }
 
 Interval run_incrSearch(double (*f)(double), double x_start, double delta, int nIter) {
