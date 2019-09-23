@@ -1,9 +1,12 @@
+#include <stdio.h>
 #include <math.h>
 #include <cstring>
 #include "falsePosition.h"
+#include "../printTable.h"
 
 #include "../../../lib/statusConstants.h"
 #include "../../../lib/exceptions.h"
+#include "../../../lib/methodNamesConstants.h"
 
 double falsePosition(double (*func)(double), double xi, double xu, int nIter, double tol, const char *errorType) {
 
@@ -30,6 +33,11 @@ double falsePosition(double (*func)(double), double xi, double xu, int nIter, do
         count = 1;
         error = tol + 1;
 
+        printf("Method: False Position\n");
+        printf("%20s | %20s | %20s | %20s | %20s | %20s | %20s | %20s |\n", "iter", "Xi", "Xu", "f(Xi)", "f(Xu)", "Xm", "f(Xm)", "Error");
+        double printData[7] = {xi, xu, fxi, fxu, xm, fxm, error};
+        printTable(FALSE_POSITION, count, printData);
+
         while (error > tol && fxm != 0 && count < nIter) {
             if (fxi * fxm < 0) {
                 xu = xm;
@@ -44,6 +52,8 @@ double falsePosition(double (*func)(double), double xi, double xu, int nIter, do
             fxm = func(xm);
             error = ((strcmp(errorType, "abs") == 0) ? fabs(xm - lastXm) : fabs((xm - lastXm) / xm));
             count++;
+            double printData[7] = {xi, xu, fxi, fxu, xm, fxm, error};
+            printTable(FALSE_POSITION, count, printData);
         }
         if (fxm == 0) {
             // exact value found

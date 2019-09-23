@@ -1,4 +1,7 @@
 #include "incrementalSearch.h"
+#include "printTable.h"
+#include <stdio.h>
+#include "../../lib/methodNamesConstants.h"
 
 /*
     Implementation:
@@ -26,6 +29,7 @@
 Interval incrementalSearch(double (*func)(double), double x0, double delta, int nIter) {
     
     double fx0, x1, fx1;
+    int count;
     Interval interval = {0, 0, false, false};
     
     fx0 = func(x0);
@@ -39,13 +43,28 @@ Interval incrementalSearch(double (*func)(double), double x0, double delta, int 
         return interval;
     }
     else {
+        count = 0;
+
+        printf("Method: Incremental Search\n");
+        printf("%20s | %20s | %20s |\n", "iter", "X", "f(X)");
+        double printData_1[2] = {x0, fx0};
+        printTable(INCR_SEARCH, count, printData_1);
+
         x1 = x0 + delta;
         fx1 = func(x1);
-        while (fx0 * fx1 > 0 && --nIter > 0) {
+        count++;
+        
+        double printData_2[2] = {x1, fx1};
+        printTable(INCR_SEARCH, count, printData_2);
+
+        while (fx0 * fx1 > 0 && count < nIter) {
             x0 = x1;
             fx0 = fx1;
             x1 = x0 + delta;
             fx1 = func(x1);
+            count++;
+            double printData_3[2] = {x1, fx1};
+            printTable(INCR_SEARCH, count, printData_3);
         }
 
         if (fx1 == 0) {

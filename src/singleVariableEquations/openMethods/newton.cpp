@@ -1,3 +1,7 @@
+#include <stdio.h>
+#include "../../../lib/methodNamesConstants.h"
+#include "../printTable.h"
+
 #include <cmath>
 #include <cstring>
 #include "newton.h"
@@ -11,6 +15,11 @@ double newton(double (*func)(double), double (*dFunc)(double), double x0, int nI
     int count = 0;
     double error = tol + 1;
 
+    printf("Method: Newton\n");
+    printf("%20s | %20s | %20s | %20s | %20s |\n", "iter", "Xn", "f(Xn)", "f'(Xn)", "Error");
+    double printData[4] = {x0, fx, dfx, error};
+    printTable(NEWTON, count, printData);
+
     while (error > tol && fx != 0 && dfx != 0 && count < nIter) {
         x1 = x0 - fx/dfx;
         fx = func(x1);
@@ -18,6 +27,9 @@ double newton(double (*func)(double), double (*dFunc)(double), double x0, int nI
         error = ((strcmp(errorType, "abs") == 0) ? fabs(x1 - x0) : fabs((x1 - x0) / x1));
         x0 = x1;
         count++;
+
+        double printData[4] = {x1, fx, dfx, error};
+        printTable(NEWTON, count, printData);
     }
     
     if (fx == 0) {

@@ -1,3 +1,7 @@
+#include <stdio.h>
+#include "../../../lib/methodNamesConstants.h"
+#include "../printTable.h"
+
 #include <cmath>
 #include <cstring>
 #include "multipleRoots.h"
@@ -18,6 +22,11 @@ double multipleRoots(double (*func)(double), double (*dFunc)(double), double (*d
     error = tol + 1;
     count = 0;
 
+    printf("Method: Multiple Roots\n");
+    printf("%20s | %20s | %20s | %20s | %20s | %20s |\n", "iter", "Xn", "f(Xn)", "f'(Xn)", "f''(Xn)", "Error");
+    double printData[5] = {x0, fx, dfx, d2fx, error};
+    printTable(MULT_ROOTS, count, printData);
+
     while (error > tol && fx != 0 && x1_denominator != 0 && count < nIter) {
         x1 = x0 - ((fx * dfx) / x1_denominator);
         fx = func(x1);
@@ -26,6 +35,9 @@ double multipleRoots(double (*func)(double), double (*dFunc)(double), double (*d
         error = ((strcmp(errorType, "abs") == 0) ? fabs(x1 - x0) : fabs((x1 - x0) / x1));
         count++;
         x0 = x1;
+
+        double printData[5] = {x0, fx, dfx, d2fx, error};
+        printTable(MULT_ROOTS, count, printData);
     }
 
     if (fx == 0) {
