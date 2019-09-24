@@ -2,7 +2,7 @@
 #include "printTable.h"
 #include "../../lib/methodNamesConstants.h"
 
-#define DECIMALS 11
+#define DECIMALS 13
 
 void printTable(methodName method, int nIter, double data[]) {
 

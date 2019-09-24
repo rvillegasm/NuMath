@@ -1,5 +1,6 @@
 #include <math.h>
 #include <stdio.h>
+#include <iostream>
 
 #include "singleVariableEquations/incrementalSearch.h"
 #include "singleVariableEquations/closedMethods/bisection.h"
@@ -12,7 +13,7 @@
 #include "../lib/statusConstants.h"
 #include "../lib/exceptions.h"
 
-#define TOLERANCE 10e-10
+#define TOLERANCE 1e-12
 
 double f(double x);
 double g(double x);
@@ -34,25 +35,33 @@ int main() {
     scanf("%i", &num_method);
 
     /*Para Incremental search*/
-    double x_start = 0;
-    double delta = 0.1;
+    double x_start;
+    double delta;
     Interval interval;
     /*Para Biseccion y regla falsa*/
     double xi = 0;
     double xu = 0;
     /*Para Punto fijo*/
-    double xa = 0;
+    double xa = 3.3;
     /*Para Newton y raices multiples (x1 para secant)*/
     double x0 = 2;
     double x1 = 4;
 
-    double nIter = 200;
-    const char *error = "rel";
+    int nIter = 200;
+    double tol;
+    std::string errorType;
+    printf("Enter the desired type of error: (abs|rel|no) ");
+    std::cin >> errorType;
+    const char *error = errorType.c_str();
     double root;
 
     switch (num_method) {
         
         case 0:
+            printf("Enter the starting point of the algorithm: ");
+            scanf("%lf", &x_start);
+            printf("Enter the value of delta: ");
+            scanf("%lf", &delta);
             interval = run_incrSearch(f, x_start, delta, nIter);
             if(interval.wasSuccessful){
                 if (interval.isRoot) {
@@ -68,32 +77,73 @@ int main() {
             }
             break;
         case 1: 
-            root = run_bisection(f, xi, xu, nIter, TOLERANCE, error);
+            printf("Enter the inferior limit of the interval: ");
+            scanf("%lf", &xi);
+            printf("Enter the upper limit of the interval: ");
+            scanf("%lf", &xu);
+            printf("Enter the desired number of iterations: ");
+            scanf("%i", &nIter);
+            printf("Enter the desired tolerance: ");
+            scanf("%le", &tol);
+            root = run_bisection(f, xi, xu, nIter, tol, error);
             printf("The root is: %e\n", root);
             break;
         case 2:
-            root = run_falsePosition(f, xi, xu, nIter, TOLERANCE, error);
+            printf("Enter the inferior limit of the interval: ");
+            scanf("%lf", &xi);
+            printf("Enter the upper limit of the interval: ");
+            scanf("%lf", &xu);
+            printf("Enter the desired number of iterations: ");
+            scanf("%i", &nIter);
+            printf("Enter the desired tolerance: ");
+            scanf("%le", &tol);
+            root = run_falsePosition(f, xi, xu, nIter, tol, error);
             printf("The root is: %e\n", root);
             break;
         case 3:
-            root = run_fixedPoint(f, g, xa, nIter, TOLERANCE, error);
+            printf("Enter the starting point of the algorithm: ");
+            scanf("%lf", &xa);
+            printf("Enter the desired number of iterations: ");
+            scanf("%i", &nIter);
+            printf("Enter the desired tolerance: ");
+            scanf("%le", &tol);
+            root = run_fixedPoint(f, g, xa, nIter, tol, error);
             printf("The root is: %e\n", root);
             break;
         case 4:
+            printf("Enter the starting point of the algorithm: ");
+            scanf("%lf", &x0);
+            printf("Enter the desired number of iterations: ");
+            scanf("%i", &nIter);
+            printf("Enter the desired tolerance: ");
+            scanf("%le", &tol);
             /*g es la derivada de f en este caso*/
-            root = run_newton(f, g, x0, nIter, TOLERANCE, error);
+            root = run_newton(f, g, x0, nIter, tol, error);
             printf("The root is: %e\n", root);
             break;
         case 5:
-            root = run_secant(f, x0, x1, nIter, TOLERANCE, error);
+            printf("Enter the first starting point of the algorithm: ");
+            scanf("%lf", &x0);
+            printf("Enter the second starting point of the algorithm: ");
+            scanf("%lf", &x1);
+            printf("Enter the desired number of iterations: ");
+            scanf("%i", &nIter);
+            printf("Enter the desired tolerance: ");
+            scanf("%le", &tol);
+            root = run_secant(f, x0, x1, nIter, tol, error);
             printf("The root is: %e\n", root);
             break;
         case 6:
+            printf("Enter the starting point of the algorithm: ");
+            scanf("%lf", &x0);
+            printf("Enter the desired number of iterations: ");
+            scanf("%i", &nIter);
+            printf("Enter the desired tolerance: ");
+            scanf("%le", &tol);
             /*g es la derivada de f en este caso y g2 es la segunda deriv*/
-            root = run_multRoots(f, g, g2, x0, nIter, TOLERANCE, error);
+            root = run_multRoots(f, g, g2, x0, nIter, tol, error);
             printf("The root is: %e\n", root);
             break;
-    
     }
 
 }
@@ -221,11 +271,14 @@ double f(double x) {
     // return x-3;
     return pow(x, 4)- 18*pow(x, 2) + 80;
     // return exp(-pow(x,2)+1)-x*sin(2*x+3)-4*x+4;
+    // return sin(x-0.2);
+    // return exp(-x) - sin(x);
 }
 
 double g(double x){
     return 4*pow(x, 3) - 36*x;
     // return -2*x*exp(-pow(x,2)+1)-sin(2*x+3)-2*x*cos(2*x+3)-4;
+    // return (pow(x,2)*cos(x) - 1) / (x*cos(x) + sin(x));
 }
 
 double g2(double x){
