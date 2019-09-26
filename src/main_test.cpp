@@ -1,6 +1,7 @@
 #include <math.h>
 #include <stdio.h>
 #include <iostream>
+#include <ctype.h>
 
 #include "singleVariableEquations/incrementalSearch.h"
 #include "singleVariableEquations/closedMethods/bisection.h"
@@ -9,6 +10,8 @@
 #include "singleVariableEquations/openMethods/newton.h"
 #include "singleVariableEquations/openMethods/secant.h"
 #include "singleVariableEquations/openMethods/multipleRoots.h"
+
+#include "tinyExpression/tinyexpr.h"
 
 #include "../lib/statusConstants.h"
 #include "../lib/exceptions.h"
@@ -52,6 +55,10 @@ int main() {
     std::string errorType;
     printf("Enter the desired type of error: (abs|rel|no) ");
     std::cin >> errorType;
+    while ((errorType.compare("abs") != 0) && (errorType.compare("rel") != 0) && (errorType.compare("no") != 0)) {
+        printf("Enter a valid type of error: (abs|rel|no) ");
+        std::cin >> errorType;
+    }
     const char *error = errorType.c_str();
     double root;
 
@@ -62,6 +69,12 @@ int main() {
             scanf("%lf", &x_start);
             printf("Enter the value of delta: ");
             scanf("%lf", &delta);
+            printf("Enter the desired number of iterations: ");
+            scanf("%i", &nIter);
+            while (nIter < 0) {
+                printf("Enter a valid number of iterations: ");
+                scanf("%i", &nIter);
+            }
             interval = run_incrSearch(f, x_start, delta, nIter);
             if(interval.wasSuccessful){
                 if (interval.isRoot) {
@@ -83,8 +96,16 @@ int main() {
             scanf("%lf", &xu);
             printf("Enter the desired number of iterations: ");
             scanf("%i", &nIter);
+            while (nIter < 0) {
+                printf("Enter a valid number of iterations: ");
+                scanf("%i", &nIter);
+            }
             printf("Enter the desired tolerance: ");
             scanf("%le", &tol);
+            while (fabs(tol) > 0 && fabs(tol) < 1) {
+                printf("Enter a valid tolerance (0 < |tol| < 1): ");
+                scanf("%le", &tol);
+            }
             root = run_bisection(f, xi, xu, nIter, tol, error);
             printf("The root is: %e\n", root);
             break;
@@ -95,8 +116,16 @@ int main() {
             scanf("%lf", &xu);
             printf("Enter the desired number of iterations: ");
             scanf("%i", &nIter);
+            while (nIter < 0) {
+                printf("Enter a valid number of iterations: ");
+                scanf("%i", &nIter);
+            }
             printf("Enter the desired tolerance: ");
             scanf("%le", &tol);
+            while (fabs(tol) > 0 && fabs(tol) < 1) {
+                printf("Enter a valid tolerance (0 < |tol| < 1): ");
+                scanf("%le", &tol);
+            }
             root = run_falsePosition(f, xi, xu, nIter, tol, error);
             printf("The root is: %e\n", root);
             break;
@@ -105,8 +134,16 @@ int main() {
             scanf("%lf", &xa);
             printf("Enter the desired number of iterations: ");
             scanf("%i", &nIter);
+            while (nIter < 0) {
+                printf("Enter a valid number of iterations: ");
+                scanf("%i", &nIter);
+            }
             printf("Enter the desired tolerance: ");
             scanf("%le", &tol);
+            while (fabs(tol) > 0 && fabs(tol) < 1) {
+                printf("Enter a valid tolerance (0 < |tol| < 1): ");
+                scanf("%le", &tol);
+            }
             root = run_fixedPoint(f, g, xa, nIter, tol, error);
             printf("The root is: %e\n", root);
             break;
@@ -115,8 +152,16 @@ int main() {
             scanf("%lf", &x0);
             printf("Enter the desired number of iterations: ");
             scanf("%i", &nIter);
+            while (nIter < 0) {
+                printf("Enter a valid number of iterations: ");
+                scanf("%i", &nIter);
+            }
             printf("Enter the desired tolerance: ");
             scanf("%le", &tol);
+            while (fabs(tol) > 0 && fabs(tol) < 1) {
+                printf("Enter a valid tolerance (0 < |tol| < 1): ");
+                scanf("%le", &tol);
+            }
             /*g es la derivada de f en este caso*/
             root = run_newton(f, g, x0, nIter, tol, error);
             printf("The root is: %e\n", root);
@@ -128,8 +173,16 @@ int main() {
             scanf("%lf", &x1);
             printf("Enter the desired number of iterations: ");
             scanf("%i", &nIter);
+            while (nIter < 0) {
+                printf("Enter a valid number of iterations: ");
+                scanf("%i", &nIter);
+            }
             printf("Enter the desired tolerance: ");
             scanf("%le", &tol);
+            while (fabs(tol) > 0 && fabs(tol) < 1) {
+                printf("Enter a valid tolerance (0 < |tol| < 1): ");
+                scanf("%le", &tol);
+            }
             root = run_secant(f, x0, x1, nIter, tol, error);
             printf("The root is: %e\n", root);
             break;
@@ -138,8 +191,16 @@ int main() {
             scanf("%lf", &x0);
             printf("Enter the desired number of iterations: ");
             scanf("%i", &nIter);
+            while (nIter < 0) {
+                printf("Enter a valid number of iterations: ");
+                scanf("%i", &nIter);
+            }
             printf("Enter the desired tolerance: ");
             scanf("%le", &tol);
+            while (fabs(tol) > 0 && fabs(tol) < 1) {
+                printf("Enter a valid tolerance (0 < |tol| < 1): ");
+                scanf("%le", &tol);
+            }
             /*g es la derivada de f en este caso y g2 es la segunda deriv*/
             root = run_multRoots(f, g, g2, x0, nIter, tol, error);
             printf("The root is: %e\n", root);
