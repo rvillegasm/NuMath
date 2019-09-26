@@ -33,6 +33,7 @@ double multipleRoots(double (*func)(double), double (*dFunc)(double), double (*d
         dfx = dFunc(x1);
         d2fx = d2Func(x1);
         error = ((strcmp(errorType, "abs") == 0) ? fabs(x1 - x0) : fabs((x1 - x0) / x1));
+        x1_denominator = pow(dfx, 2) - fx * d2fx;
         count++;
         x0 = x1;
 

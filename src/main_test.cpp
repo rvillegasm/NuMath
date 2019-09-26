@@ -11,8 +11,6 @@
 #include "singleVariableEquations/openMethods/secant.h"
 #include "singleVariableEquations/openMethods/multipleRoots.h"
 
-#include "tinyExpression/tinyexpr.h"
-
 #include "../lib/statusConstants.h"
 #include "../lib/exceptions.h"
 
@@ -102,7 +100,7 @@ int main() {
             }
             printf("Enter the desired tolerance: ");
             scanf("%le", &tol);
-            while (fabs(tol) > 0 && fabs(tol) < 1) {
+            while (tol > 1 || tol < 0) {
                 printf("Enter a valid tolerance (0 < |tol| < 1): ");
                 scanf("%le", &tol);
             }
@@ -122,7 +120,7 @@ int main() {
             }
             printf("Enter the desired tolerance: ");
             scanf("%le", &tol);
-            while (fabs(tol) > 0 && fabs(tol) < 1) {
+            while (tol > 1 || tol < 0) {
                 printf("Enter a valid tolerance (0 < |tol| < 1): ");
                 scanf("%le", &tol);
             }
@@ -140,7 +138,7 @@ int main() {
             }
             printf("Enter the desired tolerance: ");
             scanf("%le", &tol);
-            while (fabs(tol) > 0 && fabs(tol) < 1) {
+            while (tol > 1 || tol < 0) {
                 printf("Enter a valid tolerance (0 < |tol| < 1): ");
                 scanf("%le", &tol);
             }
@@ -158,7 +156,7 @@ int main() {
             }
             printf("Enter the desired tolerance: ");
             scanf("%le", &tol);
-            while (fabs(tol) > 0 && fabs(tol) < 1) {
+            while (tol > 1 || tol < 0) {
                 printf("Enter a valid tolerance (0 < |tol| < 1): ");
                 scanf("%le", &tol);
             }
@@ -179,7 +177,7 @@ int main() {
             }
             printf("Enter the desired tolerance: ");
             scanf("%le", &tol);
-            while (fabs(tol) > 0 && fabs(tol) < 1) {
+            while (tol > 1 || tol < 0) {
                 printf("Enter a valid tolerance (0 < |tol| < 1): ");
                 scanf("%le", &tol);
             }
@@ -197,7 +195,7 @@ int main() {
             }
             printf("Enter the desired tolerance: ");
             scanf("%le", &tol);
-            while (fabs(tol) > 0 && fabs(tol) < 1) {
+            while (tol > 1 || tol < 0) {
                 printf("Enter a valid tolerance (0 < |tol| < 1): ");
                 scanf("%le", &tol);
             }
@@ -330,19 +328,25 @@ double run_multRoots(double (*f)(double), double (*g)(double), double (*g2)(doub
 double f(double x) {
     // return exp(2*x)+5*x;
     // return x-3;
-    return pow(x, 4)- 18*pow(x, 2) + 80;
+    // return pow(x, 4)- 18*pow(x, 2) + 80;
     // return exp(-pow(x,2)+1)-x*sin(2*x+3)-4*x+4;
     // return sin(x-0.2);
     // return exp(-x) - sin(x);
+    return exp(-x)-x;
 }
 
 double g(double x){
-    return 4*pow(x, 3) - 36*x;
+    // return 4*pow(x, 3) - 36*x;
     // return -2*x*exp(-pow(x,2)+1)-sin(2*x+3)-2*x*cos(2*x+3)-4;
     // return (pow(x,2)*cos(x) - 1) / (x*cos(x) + sin(x));
+    // return exp(-x);
+    return -exp(-x)-1;
+
 }
 
 double g2(double x){
-    return 12*pow(x, 2) - 36;
+    // return 12*pow(x, 2) - 36;
+    // return -exp(-x)-1;
+    return exp(-x);
     // return -2*x*exp(-pow(x,2)+1)-sin(2*x+3)-2*x*cos(2*x+3)-4;
 }
