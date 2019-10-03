@@ -11,6 +11,8 @@
 #include "singleVariableEquations/openMethods/secant.h"
 #include "singleVariableEquations/openMethods/multipleRoots.h"
 
+#include "systemsOfEquations/gaussianElimination.h"
+
 #include "../lib/statusConstants.h"
 #include "../lib/exceptions.h"
 
@@ -37,191 +39,206 @@ std::string helperFunction2;
 
 int main() {
 
-    printf("Welcome to NuMath.\nPlease enter the function you want to use:\n");
-    std::cin >> inputFunction;
+    std::vector<std::vector<double>> matrix = {{21, -6, 4, -8, 0}, {3, 53, -5, 10, -300}, {4, -7, 75, -9, 78}, {6, 5, -7, 28, 56}};
 
-    int num_method;
-    printf("Please select the method that you want to use:\n");
-    printf("0) Incremental Search\n1) Bisection.\n2) False Position.\n3) Fixed Point\n4) Newton\n5) Secant\n6) Multiple Roots\n=> ");
-    scanf("%i", &num_method);
+    std::vector<double> results;
 
-    /*Para Incremental search*/
-    double x_start;
-    double delta;
-    Interval interval;
-    /*Para Biseccion y regla falsa*/
-    double xi = 0;
-    double xu = 0;
-    /*Para Punto fijo*/
-    double xa = 3.3;
-    /*Para Newton y raices multiples (x1 para secant)*/
-    double x0 = 2;
-    double x1 = 4;
-
-    int nIter = 200;
-    double tol;
-    std::string errorType;
-    printf("Enter the desired type of error: (abs|rel|no) ");
-    std::cin >> errorType;
-    while ((errorType.compare("abs") != 0) && (errorType.compare("rel") != 0) && (errorType.compare("no") != 0)) {
-        printf("Enter a valid type of error: (abs|rel|no) ");
-        std::cin >> errorType;
+    try {
+        results = simpleGaussianElimination(matrix);
     }
-    const char *error = errorType.c_str();
-    double root;
+    catch (DenominatorException &e) {
+        std::cout << e.what() << std::endl;
+        exit(EXIT_FAILURE);
+    }
+    for (double r : results) {
+        std::cout << r << std::endl;
+    }
 
-    switch (num_method) {
+    // printf("Welcome to NuMath.\nPlease enter the function you want to use:\n");
+    // std::cin >> inputFunction;
+
+    // int num_method;
+    // printf("Please select the method that you want to use:\n");
+    // printf("0) Incremental Search\n1) Bisection.\n2) False Position.\n3) Fixed Point\n4) Newton\n5) Secant\n6) Multiple Roots\n=> ");
+    // scanf("%i", &num_method);
+
+    // /*Para Incremental search*/
+    // double x_start;
+    // double delta;
+    // Interval interval;
+    // /*Para Biseccion y regla falsa*/
+    // double xi = 0;
+    // double xu = 0;
+    // /*Para Punto fijo*/
+    // double xa = 3.3;
+    // /*Para Newton y raices multiples (x1 para secant)*/
+    // double x0 = 2;
+    // double x1 = 4;
+
+    // int nIter = 200;
+    // double tol;
+    // std::string errorType;
+    // printf("Enter the desired type of error: (abs|rel|no) ");
+    // std::cin >> errorType;
+    // while ((errorType.compare("abs") != 0) && (errorType.compare("rel") != 0) && (errorType.compare("no") != 0)) {
+    //     printf("Enter a valid type of error: (abs|rel|no) ");
+    //     std::cin >> errorType;
+    // }
+    // const char *error = errorType.c_str();
+    // double root;
+
+    // switch (num_method) {
         
-        case 0:
-            printf("Enter the starting point of the algorithm: ");
-            scanf("%lf", &x_start);
-            printf("Enter the value of delta: ");
-            scanf("%lf", &delta);
-            printf("Enter the desired number of iterations: ");
-            scanf("%i", &nIter);
-            while (nIter < 0) {
-                printf("Enter a valid number of iterations: ");
-                scanf("%i", &nIter);
-            }
-            interval = run_incrSearch(f, x_start, delta, nIter);
-            if(interval.wasSuccessful){
-                if (interval.isRoot) {
-                    printf("The root is %f\n", interval.first);    
-                }
-                else {
-                    printf("The root is inside %f and %f\n", interval.first, interval.last);
-                }
-            }
-            else {
-                printf("Nothing Could be found\n");
-                exit(EXIT_FAILURE);
-            }
-            break;
-        case 1: 
-            printf("Enter the inferior limit of the interval: ");
-            scanf("%lf", &xi);
-            printf("Enter the upper limit of the interval: ");
-            scanf("%lf", &xu);
-            printf("Enter the desired number of iterations: ");
-            scanf("%i", &nIter);
-            while (nIter < 0) {
-                printf("Enter a valid number of iterations: ");
-                scanf("%i", &nIter);
-            }
-            printf("Enter the desired tolerance: ");
-            scanf("%le", &tol);
-            while (tol > 1 || tol < 0) {
-                printf("Enter a valid tolerance (0 < |tol| < 1): ");
-                scanf("%le", &tol);
-            }
-            root = run_bisection(f, xi, xu, nIter, tol, error);
-            printf("The root is: %e\n", root);
-            break;
-        case 2:
-            printf("Enter the inferior limit of the interval: ");
-            scanf("%lf", &xi);
-            printf("Enter the upper limit of the interval: ");
-            scanf("%lf", &xu);
-            printf("Enter the desired number of iterations: ");
-            scanf("%i", &nIter);
-            while (nIter < 0) {
-                printf("Enter a valid number of iterations: ");
-                scanf("%i", &nIter);
-            }
-            printf("Enter the desired tolerance: ");
-            scanf("%le", &tol);
-            while (tol > 1 || tol < 0) {
-                printf("Enter a valid tolerance (0 < |tol| < 1): ");
-                scanf("%le", &tol);
-            }
-            root = run_falsePosition(f, xi, xu, nIter, tol, error);
-            printf("The root is: %e\n", root);
-            break;
-        case 3:
-            printf("Enter the g function: ");
-            std::cin >> helperFunction1;
-            printf("Enter the starting point of the algorithm: ");
-            scanf("%lf", &xa);
-            printf("Enter the desired number of iterations: ");
-            scanf("%i", &nIter);
-            while (nIter < 0) {
-                printf("Enter a valid number of iterations: ");
-                scanf("%i", &nIter);
-            }
-            printf("Enter the desired tolerance: ");
-            scanf("%le", &tol);
-            while (tol > 1 || tol < 0) {
-                printf("Enter a valid tolerance (0 < |tol| < 1): ");
-                scanf("%le", &tol);
-            }
-            root = run_fixedPoint(f, g, xa, nIter, tol, error);
-            printf("The root is: %e\n", root);
-            break;
-        case 4:
-            printf("Enter the derivative of the function: ");
-            std::cin >> helperFunction1;
-            printf("Enter the starting point of the algorithm: ");
-            scanf("%lf", &x0);
-            printf("Enter the desired number of iterations: ");
-            scanf("%i", &nIter);
-            while (nIter < 0) {
-                printf("Enter a valid number of iterations: ");
-                scanf("%i", &nIter);
-            }
-            printf("Enter the desired tolerance: ");
-            scanf("%le", &tol);
-            while (tol > 1 || tol < 0) {
-                printf("Enter a valid tolerance (0 < |tol| < 1): ");
-                scanf("%le", &tol);
-            }
-            /*g es la derivada de f en este caso*/
-            root = run_newton(f, g, x0, nIter, tol, error);
-            printf("The root is: %e\n", root);
-            break;
-        case 5:
-            printf("Enter the first starting point of the algorithm: ");
-            scanf("%lf", &x0);
-            printf("Enter the second starting point of the algorithm: ");
-            scanf("%lf", &x1);
-            printf("Enter the desired number of iterations: ");
-            scanf("%i", &nIter);
-            while (nIter < 0) {
-                printf("Enter a valid number of iterations: ");
-                scanf("%i", &nIter);
-            }
-            printf("Enter the desired tolerance: ");
-            scanf("%le", &tol);
-            while (tol > 1 || tol < 0) {
-                printf("Enter a valid tolerance (0 < |tol| < 1): ");
-                scanf("%le", &tol);
-            }
-            root = run_secant(f, x0, x1, nIter, tol, error);
-            printf("The root is: %e\n", root);
-            break;
-        case 6:
-            printf("Enter the derivative of the function: ");
-            std::cin >> helperFunction1;
-            printf("Enter the second derivative of the function: ");
-            std::cin >> helperFunction2;
-            printf("Enter the starting point of the algorithm: ");
-            scanf("%lf", &x0);
-            printf("Enter the desired number of iterations: ");
-            scanf("%i", &nIter);
-            while (nIter < 0) {
-                printf("Enter a valid number of iterations: ");
-                scanf("%i", &nIter);
-            }
-            printf("Enter the desired tolerance: ");
-            scanf("%le", &tol);
-            while (tol > 1 || tol < 0) {
-                printf("Enter a valid tolerance (0 < |tol| < 1): ");
-                scanf("%le", &tol);
-            }
-            /*g es la derivada de f en este caso y g2 es la segunda deriv*/
-            root = run_multRoots(f, g, g2, x0, nIter, tol, error);
-            printf("The root is: %e\n", root);
-            break;
-    }
+    //     case 0:
+    //         printf("Enter the starting point of the algorithm: ");
+    //         scanf("%lf", &x_start);
+    //         printf("Enter the value of delta: ");
+    //         scanf("%lf", &delta);
+    //         printf("Enter the desired number of iterations: ");
+    //         scanf("%i", &nIter);
+    //         while (nIter < 0) {
+    //             printf("Enter a valid number of iterations: ");
+    //             scanf("%i", &nIter);
+    //         }
+    //         interval = run_incrSearch(f, x_start, delta, nIter);
+    //         if(interval.wasSuccessful){
+    //             if (interval.isRoot) {
+    //                 printf("The root is %f\n", interval.first);    
+    //             }
+    //             else {
+    //                 printf("The root is inside %f and %f\n", interval.first, interval.last);
+    //             }
+    //         }
+    //         else {
+    //             printf("Nothing Could be found\n");
+    //             exit(EXIT_FAILURE);
+    //         }
+    //         break;
+    //     case 1: 
+    //         printf("Enter the inferior limit of the interval: ");
+    //         scanf("%lf", &xi);
+    //         printf("Enter the upper limit of the interval: ");
+    //         scanf("%lf", &xu);
+    //         printf("Enter the desired number of iterations: ");
+    //         scanf("%i", &nIter);
+    //         while (nIter < 0) {
+    //             printf("Enter a valid number of iterations: ");
+    //             scanf("%i", &nIter);
+    //         }
+    //         printf("Enter the desired tolerance: ");
+    //         scanf("%le", &tol);
+    //         while (tol > 1 || tol < 0) {
+    //             printf("Enter a valid tolerance (0 < |tol| < 1): ");
+    //             scanf("%le", &tol);
+    //         }
+    //         root = run_bisection(f, xi, xu, nIter, tol, error);
+    //         printf("The root is: %e\n", root);
+    //         break;
+    //     case 2:
+    //         printf("Enter the inferior limit of the interval: ");
+    //         scanf("%lf", &xi);
+    //         printf("Enter the upper limit of the interval: ");
+    //         scanf("%lf", &xu);
+    //         printf("Enter the desired number of iterations: ");
+    //         scanf("%i", &nIter);
+    //         while (nIter < 0) {
+    //             printf("Enter a valid number of iterations: ");
+    //             scanf("%i", &nIter);
+    //         }
+    //         printf("Enter the desired tolerance: ");
+    //         scanf("%le", &tol);
+    //         while (tol > 1 || tol < 0) {
+    //             printf("Enter a valid tolerance (0 < |tol| < 1): ");
+    //             scanf("%le", &tol);
+    //         }
+    //         root = run_falsePosition(f, xi, xu, nIter, tol, error);
+    //         printf("The root is: %e\n", root);
+    //         break;
+    //     case 3:
+    //         printf("Enter the g function: ");
+    //         std::cin >> helperFunction1;
+    //         printf("Enter the starting point of the algorithm: ");
+    //         scanf("%lf", &xa);
+    //         printf("Enter the desired number of iterations: ");
+    //         scanf("%i", &nIter);
+    //         while (nIter < 0) {
+    //             printf("Enter a valid number of iterations: ");
+    //             scanf("%i", &nIter);
+    //         }
+    //         printf("Enter the desired tolerance: ");
+    //         scanf("%le", &tol);
+    //         while (tol > 1 || tol < 0) {
+    //             printf("Enter a valid tolerance (0 < |tol| < 1): ");
+    //             scanf("%le", &tol);
+    //         }
+    //         root = run_fixedPoint(f, g, xa, nIter, tol, error);
+    //         printf("The root is: %e\n", root);
+    //         break;
+    //     case 4:
+    //         printf("Enter the derivative of the function: ");
+    //         std::cin >> helperFunction1;
+    //         printf("Enter the starting point of the algorithm: ");
+    //         scanf("%lf", &x0);
+    //         printf("Enter the desired number of iterations: ");
+    //         scanf("%i", &nIter);
+    //         while (nIter < 0) {
+    //             printf("Enter a valid number of iterations: ");
+    //             scanf("%i", &nIter);
+    //         }
+    //         printf("Enter the desired tolerance: ");
+    //         scanf("%le", &tol);
+    //         while (tol > 1 || tol < 0) {
+    //             printf("Enter a valid tolerance (0 < |tol| < 1): ");
+    //             scanf("%le", &tol);
+    //         }
+    //         /*g es la derivada de f en este caso*/
+    //         root = run_newton(f, g, x0, nIter, tol, error);
+    //         printf("The root is: %e\n", root);
+    //         break;
+    //     case 5:
+    //         printf("Enter the first starting point of the algorithm: ");
+    //         scanf("%lf", &x0);
+    //         printf("Enter the second starting point of the algorithm: ");
+    //         scanf("%lf", &x1);
+    //         printf("Enter the desired number of iterations: ");
+    //         scanf("%i", &nIter);
+    //         while (nIter < 0) {
+    //             printf("Enter a valid number of iterations: ");
+    //             scanf("%i", &nIter);
+    //         }
+    //         printf("Enter the desired tolerance: ");
+    //         scanf("%le", &tol);
+    //         while (tol > 1 || tol < 0) {
+    //             printf("Enter a valid tolerance (0 < |tol| < 1): ");
+    //             scanf("%le", &tol);
+    //         }
+    //         root = run_secant(f, x0, x1, nIter, tol, error);
+    //         printf("The root is: %e\n", root);
+    //         break;
+    //     case 6:
+    //         printf("Enter the derivative of the function: ");
+    //         std::cin >> helperFunction1;
+    //         printf("Enter the second derivative of the function: ");
+    //         std::cin >> helperFunction2;
+    //         printf("Enter the starting point of the algorithm: ");
+    //         scanf("%lf", &x0);
+    //         printf("Enter the desired number of iterations: ");
+    //         scanf("%i", &nIter);
+    //         while (nIter < 0) {
+    //             printf("Enter a valid number of iterations: ");
+    //             scanf("%i", &nIter);
+    //         }
+    //         printf("Enter the desired tolerance: ");
+    //         scanf("%le", &tol);
+    //         while (tol > 1 || tol < 0) {
+    //             printf("Enter a valid tolerance (0 < |tol| < 1): ");
+    //             scanf("%le", &tol);
+    //         }
+    //         /*g es la derivada de f en este caso y g2 es la segunda deriv*/
+    //         root = run_multRoots(f, g, g2, x0, nIter, tol, error);
+    //         printf("The root is: %e\n", root);
+    //         break;
+    // }
 
 }
 
