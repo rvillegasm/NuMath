@@ -14,6 +14,8 @@
 #include "../lib/statusConstants.h"
 #include "../lib/exceptions.h"
 
+#include "../external/tinyExpression/tinyexpr.h"
+
 #define TOLERANCE 1e-12
 
 double f(double x);
@@ -28,10 +30,18 @@ double run_newton(double (*f)(double), double (*g)(double), double x0, int nIter
 double run_secant(double (*f)(double), double x0, double x1, int nIter, double tol, const char *errorType);
 double run_multRoots(double (*f)(double), double (*g)(double), double (*g2)(double), double x0, int nIter, double tol, const char *errorType);
 
+//  GLOBAL VARIABLE. BE VERY CAREFULL WITH THIS.
+std::string inputFunction;
+std::string helperFunction1;
+std::string helperFunction2;
+
 int main() {
 
+    printf("Welcome to NuMath.\nPlease enter the function you want to use:\n");
+    std::cin >> inputFunction;
+
     int num_method;
-    printf("Welcome to NuMath.\n Please select the method that you want to use:\n");
+    printf("Please select the method that you want to use:\n");
     printf("0) Incremental Search\n1) Bisection.\n2) False Position.\n3) Fixed Point\n4) Newton\n5) Secant\n6) Multiple Roots\n=> ");
     scanf("%i", &num_method);
 
@@ -128,6 +138,8 @@ int main() {
             printf("The root is: %e\n", root);
             break;
         case 3:
+            printf("Enter the g function: ");
+            std::cin >> helperFunction1;
             printf("Enter the starting point of the algorithm: ");
             scanf("%lf", &xa);
             printf("Enter the desired number of iterations: ");
@@ -146,6 +158,8 @@ int main() {
             printf("The root is: %e\n", root);
             break;
         case 4:
+            printf("Enter the derivative of the function: ");
+            std::cin >> helperFunction1;
             printf("Enter the starting point of the algorithm: ");
             scanf("%lf", &x0);
             printf("Enter the desired number of iterations: ");
@@ -185,6 +199,10 @@ int main() {
             printf("The root is: %e\n", root);
             break;
         case 6:
+            printf("Enter the derivative of the function: ");
+            std::cin >> helperFunction1;
+            printf("Enter the second derivative of the function: ");
+            std::cin >> helperFunction2;
             printf("Enter the starting point of the algorithm: ");
             scanf("%lf", &x0);
             printf("Enter the desired number of iterations: ");
@@ -326,27 +344,67 @@ double run_multRoots(double (*f)(double), double (*g)(double), double (*g2)(doub
 
 
 double f(double x) {
-    // return exp(2*x)+5*x;
-    // return x-3;
-    // return pow(x, 4)- 18*pow(x, 2) + 80;
-    // return exp(-pow(x,2)+1)-x*sin(2*x+3)-4*x+4;
-    // return sin(x-0.2);
-    // return exp(-x) - sin(x);
-    return exp(-x)-x;
+
+    const char *strFunction = inputFunction.c_str();
+    te_variable vars[] = {{"x", &x}};
+
+    int err;
+    double result;
+    te_expr *expr = te_compile(strFunction, vars, 1, &err);
+
+    if (expr) {
+        result = te_eval(expr);
+
+        te_free(expr);
+    }
+    else {
+        printf("Parse Error at %d\n", err);
+        exit(EXIT_FAILURE);
+    }
+
+    return result;
 }
 
 double g(double x){
-    // return 4*pow(x, 3) - 36*x;
-    // return -2*x*exp(-pow(x,2)+1)-sin(2*x+3)-2*x*cos(2*x+3)-4;
-    // return (pow(x,2)*cos(x) - 1) / (x*cos(x) + sin(x));
-    // return exp(-x);
-    return -exp(-x)-1;
 
+    const char *strFunction = helperFunction1.c_str();
+    te_variable vars[] = {{"x", &x}};
+
+    int err;
+    double result;
+    te_expr *expr = te_compile(strFunction, vars, 1, &err);
+
+    if (expr) {
+        result = te_eval(expr);
+
+        te_free(expr);
+    }
+    else {
+        printf("Parse Error at %d\n", err);
+        exit(EXIT_FAILURE);
+    }
+
+    return result;
 }
 
 double g2(double x){
-    // return 12*pow(x, 2) - 36;
-    // return -exp(-x)-1;
-    return exp(-x);
-    // return -2*x*exp(-pow(x,2)+1)-sin(2*x+3)-2*x*cos(2*x+3)-4;
+
+    const char *strFunction = helperFunction2.c_str();
+    te_variable vars[] = {{"x", &x}};
+
+    int err;
+    double result;
+    te_expr *expr = te_compile(strFunction, vars, 1, &err);
+
+    if (expr) {
+        result = te_eval(expr);
+
+        te_free(expr);
+    }
+    else {
+        printf("Parse Error at %d\n", err);
+        exit(EXIT_FAILURE);
+    }
+
+    return result;
 }

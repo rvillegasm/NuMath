@@ -32,7 +32,9 @@ set(SOURCES src/main_test.cpp
             lib/interval.h
             lib/statusConstants.h
             lib/exceptions.h
-            lib/methodNamesConstants.h)
+            lib/methodNamesConstants.h
+            external/tinyExpression/tinyexpr.c
+            external/tinyExpression/tinyexpr.h)
 
 add_executable(NuMath ${SOURCES})
 
