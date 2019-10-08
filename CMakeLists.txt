@@ -40,6 +40,14 @@ set(SOURCES src/main_test.cpp
 
 add_executable(NuMath ${SOURCES})
 
+find_package(OpenMP)
+if(OpenMP_CXX_FOUND)
+    message("OpenMP Found...")
+    target_link_libraries(NuMath PUBLIC OpenMP::OpenMP_CXX)
+else()
+    message(FATAL_ERROR "Error: OpenMP not found. Aborting.")
+endif()
+
 # useful links: 
 # https://medium.com/@onur.dundar1/cmake-tutorial-585dd180109b
 # http://www.thebitbangtheory.com/2011/11/how-to-openmp-cmake/ 

@@ -1,3 +1,4 @@
+#include <omp.h>
 #include "gaussianElimination.h"
 
 #include "../../lib/exceptions.h"
@@ -23,6 +24,7 @@ void __forwardElimination(std::vector<std::vector<double>> &augmentedMatrix) {
     // Phase cicle
     for (int k = 1; k <= N-1; k++) {
         // Row cicle
+        #pragma omp parallel for
         for(int i = k + 1; i <= N; i++) {
 
             double multDenominator = augmentedMatrix[k-1][k-1];
