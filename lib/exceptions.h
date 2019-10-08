@@ -43,3 +43,14 @@ struct DenominatorException : public std::exception {
     }
 
 };
+
+/**
+ * Exception for when the denominator of the secant mehtod is zero. 
+ */
+struct SolutionException : public std::exception {
+
+    const char* what() const noexcept {
+        return "The system does not have an unique solution";
+    }
+
+};

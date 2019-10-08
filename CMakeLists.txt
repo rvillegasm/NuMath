@@ -31,6 +31,8 @@ set(SOURCES src/main_test.cpp
             src/singleVariableEquations/openMethods/multipleRoots.h
             src/systemsOfEquations/gaussianElimination.cpp
             src/systemsOfEquations/gaussianElimination.h
+            src/systemsOfEquations/gaussianEliminationPartialPivot.h
+            src/systemsOfEquations/gaussianEliminationPartialPivot.cpp
             lib/interval.h
             lib/statusConstants.h
             lib/exceptions.h
