@@ -10,9 +10,9 @@
 std::vector<double> gaussianEliminationPartialPivot(std::vector<std::vector<double>> augmentedMatrix) {
     std::vector<double> results;
     try {
-        __forwardElimination2(augmentedMatrix);
-        // toStringMatrix(augmentedMatrix);
-        results = __backwardSubstitution2(augmentedMatrix);
+        __forwardEliminationPP(augmentedMatrix);
+        //toStringMatrix(augmentedMatrix);
+        results = __backwardSubstitutionPP(augmentedMatrix);
     }
     catch (DenominatorException &ex) {
         throw ex;
@@ -21,7 +21,7 @@ std::vector<double> gaussianEliminationPartialPivot(std::vector<std::vector<doub
     return results;
 }
 
-void __forwardElimination2(std::vector<std::vector<double>> &augmentedMatrix) {
+void __forwardEliminationPP(std::vector<std::vector<double>> &augmentedMatrix) {
     const int N = augmentedMatrix.size();
     // Phase cicle
     for (int k = 1; k <= N-1; k++) {
@@ -49,6 +49,7 @@ void __forwardElimination2(std::vector<std::vector<double>> &augmentedMatrix) {
 void __partialPivot(std::vector<std::vector<double>> &augmentedMatrix,int k, int n){
     double maxElement=abs(augmentedMatrix[k-1][k-1]);
     int maxRow = k-1;
+    // Finds the major element and the row in which it's found
     for(int s =k-1;s<n;s++){
         double newElement = abs(augmentedMatrix[s][k-1]);
         if(newElement>maxElement){
@@ -57,8 +58,10 @@ void __partialPivot(std::vector<std::vector<double>> &augmentedMatrix,int k, int
         }
     }
     if(maxElement==0){
+        //The system has no solution
         throw SolutionException();
     }else{
+        //Row exchange
         if(maxRow !=k-1){
             for(int i =0;i< abs(augmentedMatrix[0].size());i++){
                 double aux = augmentedMatrix[k-1][i];
@@ -71,13 +74,13 @@ void __partialPivot(std::vector<std::vector<double>> &augmentedMatrix,int k, int
 }
 
 
-std::vector<double> __backwardSubstitution2(std::vector<std::vector<double>> &augmentedTriangularMatrix) {
+std::vector<double> __backwardSubstitutionPP(std::vector<std::vector<double>> &augmentedTriangularMatrix) {
     const int N = augmentedTriangularMatrix.size();
     std::vector<double> results(N, 0.0);
-    // inverse row cicle
+    // Inverse row cicle
     for (int i = N; i > 0; i--) {
         results[i-1] = augmentedTriangularMatrix[i-1][N];
-        // col cicle 
+        // Column cicle 
         for (int j = i+1; j <= N; j++) {
             results[i-1] = results[i-1] - augmentedTriangularMatrix[i-1][j-1] * results[j-1];
         }
@@ -97,13 +100,12 @@ std::vector<double> __backwardSubstitution2(std::vector<std::vector<double>> &au
 
 
 // void toStringMatrix(std::vector<std::vector<double>> &augmentedMatrix) {
-//     for (int i = 0; i < augmentedMatrix.size(); i++) {
-//         for(int j = 0; j < augmentedMatrix[0].size(); j++) {
+//     for (int i = 0; i < abs(augmentedMatrix.size()); i++) {
+//         for(int j = 0; j < abs(augmentedMatrix[0].size()); j++) {
 //             std::cout << augmentedMatrix[i][j] << "  ";
 //         }
 //         std::cout << std::endl;
 //     }
+//     std::cout << "\n";
 // }
 
-
-//TODO: parallelize

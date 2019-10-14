@@ -19,7 +19,7 @@ std::vector<double> simpleGaussianElimination(std::vector<std::vector<double>> a
 void __forwardElimination(std::vector<std::vector<double>> &augmentedMatrix);
 
 /**
- * Finds the value of every unknown of the suystem.
+ * Finds the value of every unknown of the system.
  * 
  * @param augmentedTriangularMatrix augmented triangular matrix of the system.
  */

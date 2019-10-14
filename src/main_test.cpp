@@ -12,6 +12,7 @@
 #include "singleVariableEquations/openMethods/multipleRoots.h"
 
 #include "systemsOfEquations/gaussianElimination.h"
+#include "systemsOfEquations/gaussianEliminationTotalPivot.h"
 
 #include "../lib/statusConstants.h"
 #include "../lib/exceptions.h"
@@ -39,12 +40,12 @@ std::string helperFunction2;
 
 int main() {
 
-    std::vector<std::vector<double>> matrix = {{21, -6, 4, -8, 0}, {3, 53, -5, 10, -300}, {4, -7, 75, -9, 78}, {6, 5, -7, 28, 56}};
+    std::vector<std::vector<double>> matrix = {{-7, 2, -3, 4, -12}, {5, -1, 14, -1, 13}, {1, 9, -7, 13, 31}, {-12, 13, -8, -4, -32}};
 
     std::vector<double> results;
 
     try {
-        results = simpleGaussianElimination(matrix);
+        results = gaussianEliminationTotalPivot(matrix);
     }
     catch (DenominatorException &e) {
         std::cout << e.what() << std::endl;

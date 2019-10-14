@@ -33,6 +33,8 @@ set(SOURCES src/main_test.cpp
             src/systemsOfEquations/gaussianElimination.h
             src/systemsOfEquations/gaussianEliminationPartialPivot.h
             src/systemsOfEquations/gaussianEliminationPartialPivot.cpp
+            src/systemsOfEquations/gaussianEliminationTotalPivot.h
+            src/systemsOfEquations/gaussianEliminationTotalPivot.cpp
             lib/interval.h
             lib/statusConstants.h
             lib/exceptions.h
