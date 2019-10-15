@@ -134,7 +134,7 @@ std::vector<double> __backwardSubstitutionCHM(std::vector<std::vector<double>> &
     return x;
 }
 
-void toStringMatrix(std::vector<std::vector<double>> &matrix)
+/* void toStringMatrix(std::vector<std::vector<double>> &matrix)
 {
     for (int i = 0; i < matrix.size(); i++)
     {
@@ -144,4 +144,4 @@ void toStringMatrix(std::vector<std::vector<double>> &matrix)
         }
         std::cout << std::endl;
     }
-}
+} */

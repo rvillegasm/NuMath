@@ -40,4 +40,4 @@ std::vector<double> __forwardSubstitutionCHM(std::vector<std::vector<double>> &L
 std::vector<double> __backwardSubstitutionCHM(std::vector<std::vector<double>> &U, std::vector<double> &z);
 
 
-void toStringMatrix(std::vector<std::vector<double>> &augmentedMatrix);
+//void toStringMatrix(std::vector<std::vector<double>> &augmentedMatrix);
