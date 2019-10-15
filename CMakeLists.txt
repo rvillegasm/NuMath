@@ -1,3 +1,4 @@
+
 cmake_minimum_required(VERSION 3.9.1)
 
 # Disable in-source builds to prevent source tree corruption.
@@ -35,12 +36,12 @@ set(SOURCES src/main_test.cpp
             src/systemsOfEquations/gaussianEliminationPartialPivot.cpp
             src/systemsOfEquations/gaussianEliminationTotalPivot.h
             src/systemsOfEquations/gaussianEliminationTotalPivot.cpp
-            src/systemsOfEquations/directFactorization/croutMethod.h
-            src/systemsOfEquations/directFactorization/croutMethod.cpp
-            src/systemsOfEquations/directFactorization/choleskyMethod.h
-            src/systemsOfEquations/directFactorization/choleskyMethod.cpp
-            src/systemsOfEquations/directFactorization/doolittleMethod.h
-            src/systemsOfEquations/directFactorization/doolittleMethod.cpp
+            src/systemsOfEquations/directFactoring/croutMethod.h
+            src/systemsOfEquations/directFactoring/croutMethod.cpp
+            src/systemsOfEquations/directFactoring/choleskyMethod.h
+            src/systemsOfEquations/directFactoring/choleskyMethod.cpp
+            src/systemsOfEquations/directFactoring/doolittleMethod.h
+            src/systemsOfEquations/directFactoring/doolittleMethod.cpp
             lib/interval.h
             lib/statusConstants.h
             lib/exceptions.h

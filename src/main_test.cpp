@@ -12,7 +12,7 @@
 #include "singleVariableEquations/openMethods/multipleRoots.h"
 
 #include "systemsOfEquations/gaussianElimination.h"
-#include "systemsOfEquations/directFactorization/choleskyMethod.h"
+#include "systemsOfEquations/directFactoring/choleskyMethod.h"
 
 #include "../lib/statusConstants.h"
 #include "../lib/exceptions.h"
