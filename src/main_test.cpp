@@ -12,7 +12,7 @@
 #include "singleVariableEquations/openMethods/multipleRoots.h"
 
 #include "systemsOfEquations/gaussianElimination.h"
-#include "systemsOfEquations/gaussianEliminationTotalPivot.h"
+#include "systemsOfEquations/directFactorization/choleskyMethod.h"
 
 #include "../lib/statusConstants.h"
 #include "../lib/exceptions.h"
@@ -40,12 +40,12 @@ std::string helperFunction2;
 
 int main() {
 
-    std::vector<std::vector<double>> matrix = {{-7, 2, -3, 4, -12}, {5, -1, 14, -1, 13}, {1, 9, -7, 13, 31}, {-12, 13, -8, -4, -32}};
-
+    std::vector<std::vector<double>> matrix = {{20, -1, 3, 4}, {6, 23, 4, 3}, {7, 21, 46, 9}, {-3, -9, 12, 38}};
+    std::vector<double> b = {30,-10,20,-14};
     std::vector<double> results;
 
     try {
-        results = gaussianEliminationTotalPivot(matrix);
+        results = choleskyMethod(matrix,b);
     }
     catch (DenominatorException &e) {
         std::cout << e.what() << std::endl;
