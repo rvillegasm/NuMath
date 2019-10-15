@@ -3,14 +3,14 @@
 /**
  * Solves a system of N equations by using Crout's LU factoring
  * @param A Matrix of coefficients
- * @param b Vector containing the right side of the system of equations
+ * @param b Vector of independent terms
  */
 std::vector<double> croutMethod(std::vector<std::vector<double>> A, std::vector<double> b);
 
 /**
  * Fills the matrices L and U with their initial values
- * @param L Matrix L
- * @param U Matrix U
+ * @param L Uninitialized L matrix
+ * @param U Uninitialized U matrix
  */
 void __initializeMatrix(std::vector<std::vector<double>> &L,std::vector<std::vector<double>> &U);
 
@@ -26,16 +26,16 @@ void __LUFactoring(std::vector<std::vector<double>> &A, std::vector<std::vector<
 /**
  * Finds the value of every unknown of the system.
  * 
- * @param L Left side of the system of equations
- * @param b Right side of the system of ecuations
+ * @param L Factored L matrix
+ * @param b Vector of independent terms
  */
 std::vector<double> __forwardSubstitutionCM(std::vector<std::vector<double>> &L, std::vector<double> &b);
 
 /**
  * Finds the value of every unknown of the system.
  * 
- * @param U Left side of the system of equations
- * @param z Right side of the system of ecuations
+ * @param U Factored U matrix
+ * @param z Transition vector
  */
 std::vector<double> __backwardSubstitutionCM(std::vector<std::vector<double>> &U, std::vector<double> &z);
 
