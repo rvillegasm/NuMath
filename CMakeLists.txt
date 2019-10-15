@@ -35,6 +35,12 @@ set(SOURCES src/main_test.cpp
             src/systemsOfEquations/gaussianEliminationPartialPivot.cpp
             src/systemsOfEquations/gaussianEliminationTotalPivot.h
             src/systemsOfEquations/gaussianEliminationTotalPivot.cpp
+            src/systemsOfEquations/directFactorization/croutMethod.h
+            src/systemsOfEquations/directFactorization/croutMethod.cpp
+            src/systemsOfEquations/directFactorization/choleskyMethod.h
+            src/systemsOfEquations/directFactorization/choleskyMethod.cpp
+            src/systemsOfEquations/directFactorization/doolittleMethod.h
+            src/systemsOfEquations/directFactorization/doolittleMethod.cpp
             lib/interval.h
             lib/statusConstants.h
             lib/exceptions.h
