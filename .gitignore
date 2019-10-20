@@ -11,5 +11,9 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 
-# build directory in case the user prefers to build the proyect that way
+# build and debug directory
 build/
+debug/
+
+# editor-specific settings
+.vscode

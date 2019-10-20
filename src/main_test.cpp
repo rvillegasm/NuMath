@@ -14,8 +14,13 @@
 #include "systemsOfEquations/gaussianElimination.h"
 #include "systemsOfEquations/directFactoring/choleskyMethod.h"
 
+#include "systemsOfEquations/iterativeMethods/solveIterative.h"
+#include "systemsOfEquations/iterativeMethods/jacobi.h"
+#include "systemsOfEquations/iterativeMethods/gaussSeidel.h"
+
 #include "../lib/statusConstants.h"
 #include "../lib/exceptions.h"
+#include "../lib/errorFunctions.h"
 
 #include "../external/tinyExpression/tinyexpr.h"
 
@@ -43,17 +48,33 @@ int main() {
     std::vector<std::vector<double>> matrix = {{20, -1, 3, 4}, {6, 23, 4, 3}, {7, 21, 46, 9}, {-3, -9, 12, 38}};
     std::vector<double> b = {30,-10,20,-14};
     std::vector<double> results;
+    std::vector<double> init = {1,2,3,4};
 
     try {
-        results = choleskyMethod(matrix,b);
+        results = solveIterative(matrix, b, init, 10e-5, 2000, gaussSeidel, relNorm);
     }
-    catch (DenominatorException &e) {
+    catch (IterException &e) {
         std::cout << e.what() << std::endl;
         exit(EXIT_FAILURE);
     }
     for (double r : results) {
         std::cout << r << std::endl;
     }
+
+    // std::vector<std::vector<double>> matrix = {{20, -1, 3, 4}, {6, 23, 4, 3}, {7, 21, 46, 9}, {-3, -9, 12, 38}};
+    // std::vector<double> b = {30,-10,20,-14};
+    // std::vector<double> results;
+
+    // try {
+    //     results = choleskyMethod(matrix,b);
+    // }
+    // catch (DenominatorException &e) {
+    //     std::cout << e.what() << std::endl;
+    //     exit(EXIT_FAILURE);
+    // }
+    // for (double r : results) {
+    //     std::cout << r << std::endl;
+    // }
 
     // printf("Welcome to NuMath.\nPlease enter the function you want to use:\n");
     // std::cin >> inputFunction;

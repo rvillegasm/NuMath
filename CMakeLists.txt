@@ -32,20 +32,27 @@ set(SOURCES src/main_test.cpp
             src/singleVariableEquations/openMethods/multipleRoots.h
             src/systemsOfEquations/gaussianElimination.cpp
             src/systemsOfEquations/gaussianElimination.h
-            src/systemsOfEquations/gaussianEliminationPartialPivot.h
             src/systemsOfEquations/gaussianEliminationPartialPivot.cpp
-            src/systemsOfEquations/gaussianEliminationTotalPivot.h
+            src/systemsOfEquations/gaussianEliminationPartialPivot.h
             src/systemsOfEquations/gaussianEliminationTotalPivot.cpp
-            src/systemsOfEquations/directFactoring/croutMethod.h
+            src/systemsOfEquations/gaussianEliminationTotalPivot.h
             src/systemsOfEquations/directFactoring/croutMethod.cpp
-            src/systemsOfEquations/directFactoring/choleskyMethod.h
+            src/systemsOfEquations/directFactoring/croutMethod.h
             src/systemsOfEquations/directFactoring/choleskyMethod.cpp
-            src/systemsOfEquations/directFactoring/doolittleMethod.h
+            src/systemsOfEquations/directFactoring/choleskyMethod.h
             src/systemsOfEquations/directFactoring/doolittleMethod.cpp
+            src/systemsOfEquations/directFactoring/doolittleMethod.h
+            src/systemsOfEquations/iterativeMethods/gaussSeidel.cpp
+            src/systemsOfEquations/iterativeMethods/gaussSeidel.h
+            src/systemsOfEquations/iterativeMethods/jacobi.cpp
+            src/systemsOfEquations/iterativeMethods/jacobi.h
+            src/systemsOfEquations/iterativeMethods/solveIterative.cpp
+            src/systemsOfEquations/iterativeMethods/solveIterative.h
             lib/interval.h
             lib/statusConstants.h
             lib/exceptions.h
             lib/methodNamesConstants.h
+            lib/errorFunctions.h
             external/tinyExpression/tinyexpr.c
             external/tinyExpression/tinyexpr.h)
 
@@ -53,10 +60,10 @@ add_executable(NuMath ${SOURCES})
 
 find_package(OpenMP)
 if(OpenMP_CXX_FOUND)
-    message("OpenMP Found...")
+    # message("OpenMP Found...")
     target_link_libraries(NuMath PUBLIC OpenMP::OpenMP_CXX)
 else()
-    message(FATAL_ERROR "Error: OpenMP not found. Aborting.")
+    message(FATAL_ERROR "Error: OpenMP not found!. Aborting...")
 endif()
 
 # useful links: 
