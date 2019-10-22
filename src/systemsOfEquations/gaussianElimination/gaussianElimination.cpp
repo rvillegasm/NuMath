@@ -1,7 +1,9 @@
 #include <omp.h>
+#include <cstdio>
+
 #include "gaussianElimination.h"
 
-#include "../../lib/exceptions.h"
+#include "../../../lib/exceptions.h"
 
 // #include <iostream>
 
@@ -22,7 +24,10 @@ void __forwardElimination(std::vector<std::vector<double>> &augmentedMatrix) {
     const int N = augmentedMatrix.size();
     double multDenominator,multiplier;
     // Phase cicle
+    printf("Original Matrix \n");
     for (int k = 1; k <= N-1; k++) {
+        toStringMatrixGE(augmentedMatrix);
+        printf("Phase %d \n",k);
         // Row cicle
         //#pragma omp parallel for schedule(static,10) default(none) shared(augmentedMatrix,k) private(multDenominator,multiplier)
         #pragma omp parallel for
@@ -44,6 +49,8 @@ void __forwardElimination(std::vector<std::vector<double>> &augmentedMatrix) {
 
 std::vector<double> __backwardSubstitution(std::vector<std::vector<double>> &augmentedTriangularMatrix) {
     const int N = augmentedTriangularMatrix.size();
+    //printf("Backward Substitution over: \n");
+    toStringMatrixGE(augmentedTriangularMatrix);
     std::vector<double> results(N, 0.0);
     // Inverse row cicle
     for (int i = N; i > 0; i--) {
@@ -64,12 +71,13 @@ std::vector<double> __backwardSubstitution(std::vector<std::vector<double>> &aug
 }
 
 
-// void toStringMatrix(std::vector<std::vector<double>> &augmentedMatrix) {
-//     for (int i = 0; i < augmentedMatrix.size(); i++) {
-//         for(int j = 0; j < augmentedMatrix[0].size(); j++) {
-//             std::cout << augmentedMatrix[i][j] << "  ";
-//         }
-//         std::cout << std::endl;
-//     }
-// }
+void toStringMatrixGE(std::vector<std::vector<double>> &augmentedMatrix) {
+    for (unsigned int i = 0; i < augmentedMatrix.size(); i++) {
+        for(unsigned int j = 0; j < augmentedMatrix[0].size(); j++) {
+            printf("%f ",augmentedMatrix[i][j]);
+        }
+        printf("\n");
+    }
+    printf("\n");
+}
 

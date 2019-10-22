@@ -16,7 +16,16 @@ std::vector<double> doolittleMethod(std::vector<std::vector<double>> A, std::vec
     try
     {
         __LUFactoringDM(A, L, U, N);
+        printf("L matrix\n");
+        toStringMatrixD(L);
+        printf("U matrix\n");
+        toStringMatrixD(U);
         std::vector<double> z = __forwardSubstitutionDM(L, b);
+        printf("z vector\n");
+        for(double e: z){
+            printf("%f ",e);
+        }
+        printf("\n\n");
         results = __backwardSubstitutionDM(U, z);
     }
     catch (DenominatorException &ex)
@@ -135,14 +144,16 @@ std::vector<double> __backwardSubstitutionDM(std::vector<std::vector<double>> &U
     return x;
 }
 
-// void toStringMatrix(std::vector<std::vector<double>> &matrix)
-// {
-//     for (int i = 0; i < abs(matrix.size()); i++)
-//     {
-//         for (int j = 0; j < abs(matrix[0].size()); j++)
-//         {
-//             std::cout << matrix[i][j] << "  ";
-//         }
-//         std::cout << std::endl;
-//     }
-// }
+void toStringMatrixD(std::vector<std::vector<double>> &matrix)
+{
+    for (unsigned int i = 0; i < matrix.size(); i++)
+    {
+        for (unsigned int j = 0; j < matrix[0].size(); j++)
+        {
+            printf("%f ",matrix[i][j]);
+        }
+        std::cout << std::endl;
+        
+    }
+    printf("\n");
+} 

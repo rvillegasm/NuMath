@@ -16,7 +16,16 @@ std::vector<double> croutMethod(std::vector<std::vector<double>> A, std::vector<
     try
     {
         __LUFactoring(A, L, U, N);
+         printf("L matrix\n");
+        toStringMatrixCR(L);
+        printf("U matrix\n");
+        toStringMatrixCR(U);
         std::vector<double> z = __forwardSubstitutionCM(L, b);
+        printf("z vector\n");
+        for(double e: z){
+            printf("%f ",e);
+        }
+        printf("\n\n");
         results = __backwardSubstitutionCM(U, z);
     }
     catch (DenominatorException &ex)
@@ -149,14 +158,16 @@ std::vector<double> __backwardSubstitutionCM(std::vector<std::vector<double>> &U
     return x;
 }
 
-// void toStringMatrix(std::vector<std::vector<double>> &matrix)
-// {
-//     for (int i = 0; i < abs(matrix.size()); i++)
-//     {
-//         for (int j = 0; j < abs(matrix[0].size()); j++)
-//         {
-//             std::cout << matrix[i][j] << "  ";
-//         }
-//         std::cout << std::endl;
-//     }
-// }
+void toStringMatrixCR(std::vector<std::vector<double>> &matrix)
+{
+    for (unsigned int i = 0; i < matrix.size(); i++)
+    {
+        for (unsigned int j = 0; j < matrix[0].size(); j++)
+        {
+            printf("%f ",matrix[i][j]);
+        }
+        std::cout << std::endl;
+        
+    }
+    printf("\n");
+} 
