@@ -1,7 +1,7 @@
 #include <omp.h>
 #include "gaussianEliminationTotalPivot.h"
 
-#include "../../lib/exceptions.h"
+#include "../../../lib/exceptions.h"
 
 // #include <iostream>
 #include <iostream>
@@ -26,8 +26,11 @@ void __forwardEliminationTP(std::vector<std::vector<double>> &augmentedMatrix) {
     const int N = augmentedMatrix.size();
     std::vector<int> marks = __fillMarks(N);
     // Phase cicle
+    printf("Original Matrix\n");
     for (int k = 1; k <= N-1; k++) {
         __totalPivot(augmentedMatrix,marks,k,N);
+        toStringMatrixGT(augmentedMatrix);
+        printf("Phase %d \n",k);
         // Row cicle
         #pragma omp parallel for
         for(int i = k + 1; i <= N; i++) {
@@ -95,6 +98,9 @@ void __totalPivot(std::vector<std::vector<double>> &augmentedMatrix,std::vector<
 
 std::vector<double> __backwardSubstitutionTP(std::vector<std::vector<double>> &augmentedTriangularMatrix) {
     const int N = augmentedTriangularMatrix.size();
+    
+     toStringMatrixGT(augmentedTriangularMatrix);
+     printf("Backward substitution results \n");
     std::vector<double> results(N, 0.0);
     // inverse row cicle
     for (int i = N; i > 0; i--) {
@@ -111,6 +117,7 @@ std::vector<double> __backwardSubstitutionTP(std::vector<std::vector<double>> &a
             results[i-1] = results[i-1] / denominator;
         }
     }
+
     return results;
 }
 
@@ -125,14 +132,15 @@ std::vector<int> __fillMarks(int n){
 }
 
 
-// void toStringMatrix(std::vector<std::vector<double>> &augmentedMatrix) {
-//     for (int i = 0; i < augmentedMatrix.size(); i++) {
-//         for(int j = 0; j < augmentedMatrix[0].size(); j++) {
-//             std::cout << augmentedMatrix[i][j] << "  ";
-//         }
-//         std::cout << std::endl;
-//     }
-// }
+void toStringMatrixGT(std::vector<std::vector<double>> &augmentedMatrix) {
+    for (unsigned int i = 0; i < augmentedMatrix.size(); i++) {
+        for(unsigned int j = 0; j < augmentedMatrix[0].size(); j++) {
+            printf("%f ",augmentedMatrix[i][j]);
+        }
+        printf("\n");
+    }
+    printf("\n");
+}
 
 
 //TODO: parallelize

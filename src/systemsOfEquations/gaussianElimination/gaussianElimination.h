@@ -26,4 +26,4 @@ void __forwardElimination(std::vector<std::vector<double>> &augmentedMatrix);
 std::vector<double> __backwardSubstitution(std::vector<std::vector<double>> &augmentedTriangularMatrix);
 
 
-// void toStringMatrix(std::vector<std::vector<double>> &augmentedMatrix);
+void toStringMatrixGE(std::vector<std::vector<double>> &augmentedMatrix);
