@@ -19,7 +19,7 @@ std::vector<double> doolittleMethod(std::vector<std::vector<double>> A, std::vec
         std::vector<double> z = __forwardSubstitutionDM(L, b);
         results = __backwardSubstitutionDM(U, z);
     }
-    catch (DenominatorException &ex)
+    catch (DenominatorException &ex) 
     {
         throw ex;
     }

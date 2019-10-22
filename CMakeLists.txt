@@ -30,12 +30,12 @@ set(SOURCES src/main_test.cpp
             src/singleVariableEquations/openMethods/secant.h
             src/singleVariableEquations/openMethods/multipleRoots.cpp
             src/singleVariableEquations/openMethods/multipleRoots.h
-            src/systemsOfEquations/gaussianElimination.cpp
-            src/systemsOfEquations/gaussianElimination.h
-            src/systemsOfEquations/gaussianEliminationPartialPivot.cpp
-            src/systemsOfEquations/gaussianEliminationPartialPivot.h
-            src/systemsOfEquations/gaussianEliminationTotalPivot.cpp
-            src/systemsOfEquations/gaussianEliminationTotalPivot.h
+            src/systemsOfEquations/gaussianElimination/gaussianElimination.cpp
+            src/systemsOfEquations/gaussianElimination/gaussianElimination.h
+            src/systemsOfEquations/gaussianElimination/gaussianEliminationPartialPivot.cpp
+            src/systemsOfEquations/gaussianElimination/gaussianEliminationPartialPivot.h
+            src/systemsOfEquations/gaussianElimination/gaussianEliminationTotalPivot.cpp
+            src/systemsOfEquations/gaussianElimination/gaussianEliminationTotalPivot.h
             src/systemsOfEquations/directFactoring/croutMethod.cpp
             src/systemsOfEquations/directFactoring/croutMethod.h
             src/systemsOfEquations/directFactoring/choleskyMethod.cpp
