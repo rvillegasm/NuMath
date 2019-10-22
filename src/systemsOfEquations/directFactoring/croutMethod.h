@@ -41,3 +41,4 @@ std::vector<double> __backwardSubstitutionCM(std::vector<std::vector<double>> &U
 
 
 void toStringMatrixCR(std::vector<std::vector<double>> &augmentedMatrix);
+void toStringIncMatrixCR(std::vector<std::vector<double>> &matrix, char name);

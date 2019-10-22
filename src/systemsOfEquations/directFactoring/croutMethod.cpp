@@ -66,6 +66,8 @@ void __LUFactoring(std::vector<std::vector<double>> &A, std::vector<std::vector<
 
     for (int k = 1; k < N + 1; k++)
     {
+        printf("Phase %d\n",k);
+        toStringIncMatrixCR(L,'L');
         double sum = 0;
         for (int p = 0; p < k - 1; p++)
         {
@@ -165,6 +167,24 @@ void toStringMatrixCR(std::vector<std::vector<double>> &matrix)
         for (unsigned int j = 0; j < matrix[0].size(); j++)
         {
             printf("%f ",matrix[i][j]);
+        }
+        std::cout << std::endl;
+        
+    }
+    printf("\n");
+} 
+
+void toStringIncMatrixCR(std::vector<std::vector<double>> &matrix, char name)
+{
+    for (unsigned int i = 0; i < matrix.size(); i++)
+    {
+        for (unsigned int j = 0; j < matrix[0].size(); j++)
+        {
+            if(matrix[i][j]==DBL_MAX){
+                printf("%6c%d%d ",name,j+1,i+1);
+            }else{
+                printf("%f ",matrix[i][j]);
+            }
         }
         std::cout << std::endl;
         

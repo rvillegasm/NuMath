@@ -9,26 +9,37 @@
 
 std::vector<double> gaussianEliminationTotalPivot(std::vector<std::vector<double>> augmentedMatrix) {
     
-    std::vector<double> results;
+    std::vector<double> results, r;
     try {
-        __forwardEliminationTP(augmentedMatrix);
+        std::vector<int> marks =__forwardEliminationTP(augmentedMatrix);
         // toStringMatrix(augmentedMatrix);
         results = __backwardSubstitutionTP(augmentedMatrix);
+        r = __orderResults(marks,results);
     }
     catch (DenominatorException &ex) {
         throw ex;
     }
 
-    return results;
+    return r;
 }
 
-void __forwardEliminationTP(std::vector<std::vector<double>> &augmentedMatrix) {
+std::vector<double> __orderResults(std::vector<int> marks, std::vector<double> results){
+  std::vector<double> r ={11,22,33,44};
+  int i =0;
+  for(int a: marks){
+    r[a-1]=results[i]; 
+    i++;
+  }
+  return r;
+}
+
+std::vector<int> __forwardEliminationTP(std::vector<std::vector<double>> &augmentedMatrix) {
     const int N = augmentedMatrix.size();
     std::vector<int> marks = __fillMarks(N);
     // Phase cicle
     printf("Original Matrix\n");
     for (int k = 1; k <= N-1; k++) {
-        __totalPivot(augmentedMatrix,marks,k,N);
+        marks = __totalPivot(augmentedMatrix,marks,k,N);
         toStringMatrixGT(augmentedMatrix);
         printf("Phase %d \n",k);
         // Row cicle
@@ -49,9 +60,10 @@ void __forwardEliminationTP(std::vector<std::vector<double>> &augmentedMatrix) {
             }
         }
     }
+    return marks;
 }
 
-void __totalPivot(std::vector<std::vector<double>> &augmentedMatrix,std::vector<int> &marks,int k, int n){
+std::vector<int> __totalPivot(std::vector<std::vector<double>> &augmentedMatrix,std::vector<int> &marks,int k, int n){
     double max =0;
     int maxRow =k-1;
     int maxColumn =k-1;
@@ -92,7 +104,7 @@ void __totalPivot(std::vector<std::vector<double>> &augmentedMatrix,std::vector<
                 
             }
     }
-
+    return marks;
 }
 
 

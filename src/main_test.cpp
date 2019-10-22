@@ -62,7 +62,7 @@ int main() {
     std::vector<std::vector<double>> Achol = {{20, -1, 3, 4}, {6 ,23, 4, 3}, {7, 21, 46, 9}, {-3, -9, 12, 38}};
     std::vector<double> Bchol = {30,-10,20,-14};
     try {
-        results = doolittleMethod(Acrout,Bcrout);
+        results = croutMethod(Acrout,Bcrout);
     }
     catch (IterException &e) {
         std::cout << e.what() << std::endl;

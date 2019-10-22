@@ -16,14 +16,14 @@ std::vector<double> gaussianEliminationTotalPivot(std::vector<std::vector<double
  * 
  * @param augmentedMatrix augmented matrix representig the system.
  */
-void __forwardEliminationTP(std::vector<std::vector<double>> &augmentedMatrix);
+std::vector<int> __forwardEliminationTP(std::vector<std::vector<double>> &augmentedMatrix);
 
 /**
  * Relocates rows and columns in a matrix so the largest element in k row and column is placed in the main diagonal
  * 
  * @param augmentedMatrix augmented matrix representig the system.
  */
-void __totalPivot(std::vector<std::vector<double>> &augmentedMatrix, std::vector<int> &marks, int k, int n);
+std::vector<int> __totalPivot(std::vector<std::vector<double>> &augmentedMatrix, std::vector<int> &marks, int k, int n);
 
 /**
  * Finds the value of every unknown of the suystem.
@@ -39,3 +39,4 @@ std::vector<double> __backwardSubstitutionTP(std::vector<std::vector<double>> &a
 std::vector<int> __fillMarks(int n);
 
 void toStringMatrixGT(std::vector<std::vector<double>> &augmentedMatrix);
+std::vector<double> __orderResults(std::vector<int> marks, std::vector<double> results);
