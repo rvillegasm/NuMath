@@ -17,16 +17,7 @@ std::vector<double> choleskyMethod(std::vector<std::vector<double>> A, std::vect
     try
     {
         __LUFactoringCH(A, L, U, N);
-        printf("L matrix\n");
-        toStringMatrixCH(L);
-        printf("U matrix\n");
-        toStringMatrixCH(U);
         std::vector<double> z = __forwardSubstitutionCHM(L, b);
-        printf("z vector\n");
-        for(double e: z){
-            printf("%f ",e);
-        }
-        printf("\n\n");
         results = __backwardSubstitutionCHM(U, z);
     }
     catch (DenominatorException &ex)
@@ -143,16 +134,14 @@ std::vector<double> __backwardSubstitutionCHM(std::vector<std::vector<double>> &
     return x;
 }
 
-void toStringMatrixCH(std::vector<std::vector<double>> &matrix)
+/* void toStringMatrix(std::vector<std::vector<double>> &matrix)
 {
-    for (unsigned int i = 0; i < matrix.size(); i++)
+    for (int i = 0; i < matrix.size(); i++)
     {
-        for (unsigned int j = 0; j < matrix[0].size(); j++)
+        for (int j = 0; j < matrix[0].size(); j++)
         {
-            printf("%f ",matrix[i][j]);
+            std::cout << matrix[i][j] << "  ";
         }
         std::cout << std::endl;
-        
     }
-    printf("\n");
-} 
+} */

@@ -32,4 +32,4 @@ void __partialPivot(std::vector<std::vector<double>> &augmentedMatrix, int k, in
 std::vector<double> __backwardSubstitutionPP(std::vector<std::vector<double>> &augmentedTriangularMatrix);
 
 
-void toStringMatrixGP(std::vector<std::vector<double>> &augmentedMatrix);
+//void toStringMatrix(std::vector<std::vector<double>> &augmentedMatrix);

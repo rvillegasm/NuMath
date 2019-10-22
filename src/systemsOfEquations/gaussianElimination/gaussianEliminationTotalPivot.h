@@ -38,4 +38,4 @@ std::vector<double> __backwardSubstitutionTP(std::vector<std::vector<double>> &a
  */
 std::vector<int> __fillMarks(int n);
 
-void toStringMatrixGT(std::vector<std::vector<double>> &augmentedMatrix);
+// void toStringMatrix(std::vector<std::vector<double>> &augmentedMatrix);

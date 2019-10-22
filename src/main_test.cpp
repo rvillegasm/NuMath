@@ -11,11 +11,8 @@
 #include "singleVariableEquations/openMethods/secant.h"
 #include "singleVariableEquations/openMethods/multipleRoots.h"
 
-#include "systemsOfEquations/gaussianElimination/gaussianElimination.h"
-#include "systemsOfEquations/gaussianElimination/gaussianEliminationTotalPivot.h"
+#include "systemsOfEquations/gaussianElimination.h"
 #include "systemsOfEquations/directFactoring/choleskyMethod.h"
-#include "systemsOfEquations/directFactoring/croutMethod.h"
-#include "systemsOfEquations/directFactoring/doolittleMethod.h"
 
 #include "systemsOfEquations/iterativeMethods/solveIterative.h"
 #include "systemsOfEquations/iterativeMethods/jacobi.h"
@@ -52,27 +49,16 @@ int main() {
     std::vector<double> b = {30,-10,20,-14};
     std::vector<double> results;
     std::vector<double> init = {1,2,3,4};
-    std::vector<std::vector<double>> matrixSGE = {{21, -6, 4, -8, 0}, {3, 53, -5, 10, -300}, {4, -7, 75, -9, 78}, {6, 5, -7, 28,56}};
-    std::vector<std::vector<double>> matrixGEPP = {{-7, 2, -3, 4, -12}, {5, -1, 14, -1, 13}, {1, 9, -7, 5, 31}, {-12, 13, -8, -4,-32}};
-    std::vector<std::vector<double>> matrixGETP = {{-7, 2, -3, 4, -12}, {5, -1, 14, -1, 13}, {1, 9, -7, 13, 31}, {-12, 13, -8, -4,-32}};
-    
-    std::vector<std::vector<double>> Acrout = {{36, 3, -4, 5}, {5, -45, 10, -2}, {6, 8, 57, 5}, {2, 3, -8, -42}};
-    std::vector<double> Bcrout = {-20,69,96,-32};
 
-    std::vector<std::vector<double>> Achol = {{20, -1, 3, 4}, {6 ,23, 4, 3}, {7, 21, 46, 9}, {-3, -9, 12, 38}};
-    std::vector<double> Bchol = {30,-10,20,-14};
     try {
-        results = doolittleMethod(Acrout,Bcrout);
+        results = solveIterative(matrix, b, init, 10e-5, 2000, gaussSeidel, relNorm);
     }
     catch (IterException &e) {
         std::cout << e.what() << std::endl;
         exit(EXIT_FAILURE);
     }
-    int i =1;
-    //Does not apply to Total Pivot given marks vector
     for (double r : results) {
-        std::cout << "X"<< i << " :"<<r << std::endl;
-        i++;
+        std::cout << r << std::endl;
     }
 
     // std::vector<std::vector<double>> matrix = {{20, -1, 3, 4}, {6, 23, 4, 3}, {7, 21, 46, 9}, {-3, -9, 12, 38}};

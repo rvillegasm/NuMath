@@ -1,7 +1,7 @@
 #include <omp.h>
 #include "gaussianEliminationPartialPivot.h"
 
-#include "../../../lib/exceptions.h"
+#include "../../lib/exceptions.h"
 
 // #include <iostream>
 #include <iostream>
@@ -24,13 +24,8 @@ std::vector<double> gaussianEliminationPartialPivot(std::vector<std::vector<doub
 void __forwardEliminationPP(std::vector<std::vector<double>> &augmentedMatrix) {
     const int N = augmentedMatrix.size();
     // Phase cicle
-    printf("Original Matrix\n");
     for (int k = 1; k <= N-1; k++) {
-        //toStringMatrixGP(augmentedMatrix);
-        //printf("Partial Pivot\n");
         __partialPivot(augmentedMatrix,k,N);
-        toStringMatrixGP(augmentedMatrix);
-        printf("Phase %d \n",k);
         // Row cicle
         #pragma omp parallel for
         for(int i = k + 1; i <= N; i++) {
@@ -81,8 +76,6 @@ void __partialPivot(std::vector<std::vector<double>> &augmentedMatrix,int k, int
 
 std::vector<double> __backwardSubstitutionPP(std::vector<std::vector<double>> &augmentedTriangularMatrix) {
     const int N = augmentedTriangularMatrix.size();
-    //printf("Backward Substitution over: \n");
-    toStringMatrixGP(augmentedTriangularMatrix);
     std::vector<double> results(N, 0.0);
     // Inverse row cicle
     for (int i = N; i > 0; i--) {
@@ -106,14 +99,13 @@ std::vector<double> __backwardSubstitutionPP(std::vector<std::vector<double>> &a
 }
 
 
-void toStringMatrixGP(std::vector<std::vector<double>> &augmentedMatrix) {
-    for (unsigned int i = 0; i < augmentedMatrix.size(); i++) {
-        for(unsigned int j = 0; j < augmentedMatrix[0].size(); j++) {
-            printf("%f ",augmentedMatrix[i][j]);
-        }
-        printf("\n");
-    }
-    printf("\n");
-}
-
+// void toStringMatrix(std::vector<std::vector<double>> &augmentedMatrix) {
+//     for (int i = 0; i < abs(augmentedMatrix.size()); i++) {
+//         for(int j = 0; j < abs(augmentedMatrix[0].size()); j++) {
+//             std::cout << augmentedMatrix[i][j] << "  ";
+//         }
+//         std::cout << std::endl;
+//     }
+//     std::cout << "\n";
+// }
 
