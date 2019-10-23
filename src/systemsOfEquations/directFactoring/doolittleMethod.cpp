@@ -16,9 +16,9 @@ std::vector<double> doolittleMethod(std::vector<std::vector<double>> A, std::vec
     try
     {
         __LUFactoringDM(A, L, U, N);
-        printf("L matrix\n");
+        printf("Final L matrix\n");
         toStringMatrixD(L);
-        printf("U matrix\n");
+        printf("Final U matrix\n");
         toStringMatrixD(U);
         std::vector<double> z = __forwardSubstitutionDM(L, b);
         printf("z vector\n");
@@ -65,7 +65,9 @@ void __LUFactoringDM(std::vector<std::vector<double>> &A, std::vector<std::vecto
 {
     for (int k = 1; k < N + 1; k++)
     {
-
+        printf("Phase %d\n\n",k);
+        toStringIncMatrixD(L,'L');
+        toStringIncMatrixD(U,'U');
         double sum = 0;
         for (int p = 0; p < k - 1; p++)
         {
@@ -151,6 +153,29 @@ void toStringMatrixD(std::vector<std::vector<double>> &matrix)
         for (unsigned int j = 0; j < matrix[0].size(); j++)
         {
             printf("%f ",matrix[i][j]);
+        }
+        std::cout << std::endl;
+        
+    }
+    printf("\n");
+} 
+
+
+//Prints incomplete matrix with equal spacing
+void toStringIncMatrixD(std::vector<std::vector<double>> &matrix, char name)
+{
+    printf("%c matrix\n",name);
+    for (unsigned int i = 0; i < matrix.size(); i++)
+    {
+        for (unsigned int j = 0; j < matrix[0].size(); j++)
+        {
+            if(matrix[i][j]==DBL_MAX){
+                
+                printf("%6c%d%d ",name,j+1,i+1);
+                
+            }else{
+                printf("%.6f ",matrix[i][j]);
+            }
         }
         std::cout << std::endl;
         

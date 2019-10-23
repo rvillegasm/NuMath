@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <ctype.h>
+#include <iomanip>
 
 #include "singleVariableEquations/incrementalSearch.h"
 #include "singleVariableEquations/closedMethods/bisection.h"
@@ -62,7 +63,7 @@ int main() {
     std::vector<std::vector<double>> Achol = {{20, -1, 3, 4}, {6 ,23, 4, 3}, {7, 21, 46, 9}, {-3, -9, 12, 38}};
     std::vector<double> Bchol = {30,-10,20,-14};
     try {
-        results = croutMethod(Acrout,Bcrout);
+        results = doolittleMethod(Acrout,Bcrout);
     }
     catch (IterException &e) {
         std::cout << e.what() << std::endl;
@@ -71,7 +72,7 @@ int main() {
     int i =1;
     //Does not apply to Total Pivot given marks vector
     for (double r : results) {
-        std::cout << "X"<< i << " :"<<r << std::endl;
+        std::cout << "X"<< i << " :"<<std::setprecision(10)<<r << std::endl;
         i++;
     }
 

@@ -16,9 +16,9 @@ std::vector<double> croutMethod(std::vector<std::vector<double>> A, std::vector<
     try
     {
         __LUFactoring(A, L, U, N);
-         printf("L matrix\n");
+         printf("Final L matrix\n");
         toStringMatrixCR(L);
-        printf("U matrix\n");
+        printf("Final U matrix\n");
         toStringMatrixCR(U);
         std::vector<double> z = __forwardSubstitutionCM(L, b);
         printf("z vector\n");
@@ -66,8 +66,9 @@ void __LUFactoring(std::vector<std::vector<double>> &A, std::vector<std::vector<
 
     for (int k = 1; k < N + 1; k++)
     {
-        printf("Phase %d\n",k);
+        printf("Phase %d\n\n",k);
         toStringIncMatrixCR(L,'L');
+        toStringIncMatrixCR(U,'U');
         double sum = 0;
         for (int p = 0; p < k - 1; p++)
         {
@@ -168,14 +169,15 @@ void toStringMatrixCR(std::vector<std::vector<double>> &matrix)
         {
             printf("%f ",matrix[i][j]);
         }
-        std::cout << std::endl;
-        
+        std::cout << std::endl;   
     }
     printf("\n");
 } 
 
+//Prints incomplete matrix with equal spacing
 void toStringIncMatrixCR(std::vector<std::vector<double>> &matrix, char name)
 {
+    printf("%c matrix\n",name);
     for (unsigned int i = 0; i < matrix.size(); i++)
     {
         for (unsigned int j = 0; j < matrix[0].size(); j++)
@@ -183,7 +185,7 @@ void toStringIncMatrixCR(std::vector<std::vector<double>> &matrix, char name)
             if(matrix[i][j]==DBL_MAX){
                 printf("%6c%d%d ",name,j+1,i+1);
             }else{
-                printf("%f ",matrix[i][j]);
+                printf("%.6f ",matrix[i][j]);
             }
         }
         std::cout << std::endl;

@@ -39,5 +39,15 @@ std::vector<double> __forwardSubstitutionCHM(std::vector<std::vector<double>> &L
  */
 std::vector<double> __backwardSubstitutionCHM(std::vector<std::vector<double>> &U, std::vector<double> &z);
 
+/**
+ * Prints any needed matrix
+ * @param matrix Matrix to be printed
+ */
+void toStringMatrixCH(std::vector<std::vector<double>> &matrix);
 
-void toStringMatrixCH(std::vector<std::vector<double>> &augmentedMatrix);
+/**
+ * Printss an uncomplete matrix with unknown values
+ * @param matrix Matrix to be printed
+ * @param name Matrix name to show unknown items
+ */
+void toStringIncMatrixCH(std::vector<std::vector<double>> &matrix, char name);

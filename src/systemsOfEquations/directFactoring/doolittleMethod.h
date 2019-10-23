@@ -40,6 +40,15 @@ std::vector<double> __forwardSubstitutionDM(std::vector<std::vector<double>> &L,
 std::vector<double> __backwardSubstitutionDM(std::vector<std::vector<double>> &U, std::vector<double> &z);
 
 
-void toStringMatrixD(std::vector<std::vector<double>> &augmentedMatrix);
+/**
+ * Prints any needed matrix
+ * @param matrix Matrix to be printed
+ */
+void toStringMatrixD(std::vector<std::vector<double>> &matrix);
 
-
+/**
+ * Printss an uncomplete matrix with unknown values
+ * @param matrix Matrix to be printed
+ * @param name Matrix name to show unknown items
+ */
+void toStringIncMatrixD(std::vector<std::vector<double>> &matrix, char name);
