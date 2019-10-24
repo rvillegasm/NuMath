@@ -72,9 +72,17 @@ int main() {
     int i =1;
     //Does not apply to Total Pivot given marks vector
     for (double r : results) {
-        std::cout << "X"<< i << " :"<<std::setprecision(10)<<r << std::endl;
+        std::cout << "X" << i << " :" << std::setprecision(10) << r << std::endl;
         i++;
     }
+
+    // try {
+    //     results = solveIterative(matrix, b, init, 10e-5, 2000, jacobi, absNorm);
+    // }
+    // catch (IterException &e) {
+    //     std::cout << e.what() << std::endl;
+    //     exit(EXIT_FAILURE);
+    // }
 
     // std::vector<std::vector<double>> matrix = {{20, -1, 3, 4}, {6, 23, 4, 3}, {7, 21, 46, 9}, {-3, -9, 12, 38}};
     // std::vector<double> b = {30,-10,20,-14};
