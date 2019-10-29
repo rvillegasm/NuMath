@@ -1,5 +1,7 @@
 #include "jacobi.h"
 
+#include <omp.h>
+
 std::vector<double> jacobi(std::vector<double> &variables, 
                            std::vector<std::vector<double>> &matrix,
                            std::vector<double> &indepTerms) {
@@ -8,6 +10,9 @@ std::vector<double> jacobi(std::vector<double> &variables,
     std::vector<double> results (indepTerms.size());
     const int N = variables.size();
 
+    // Each thread calculate one value in the results vector,
+    // private copy of sum so each has a
+    #pragma omp parallel for private(sum)
     for (int i = 0; i < N; i++) {
         
         sum = 0;
