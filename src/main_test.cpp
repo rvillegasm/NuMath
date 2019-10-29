@@ -49,11 +49,11 @@ std::string helperFunction2;
 
 int main() {
 
-    std::vector<std::vector<double>> matrix = {{20, -1, 3, 4}, {6, 23, 4, 3}, {7, 21, 46, 9}, {-3, -9, 12, 38}};
-    std::vector<double> b = {30,-10,20,-14};
+    std::vector<std::vector<double>> matrix = {{34, -5, 6, 12}, {-9, 43, 21, -8}, {-12, 4, 75, 22}, {7, 5, -13, 65}};
+    std::vector<double> b = {37,123,16,9};
     std::vector<double> results;
     std::vector<double> init = {1,2,3,4};
-    std::vector<std::vector<double>> matrixSGE = {{21, -6, 4, -8, 0}, {3, 53, -5, 10, -300}, {4, -7, 75, -9, 78}, {6, 5, -7, 28,56}};
+    std::vector<std::vector<double>> matrixSGE = {{34, -5, 6, 12,37}, {-9, 43, 21, -8,123}, {-12, 4, 75, 22,16}, {7, 5, -13, 65,9}};
     std::vector<std::vector<double>> matrixGEPP = {{-7, 2, -3, 4, -12}, {5, -1, 14, -1, 13}, {1, 9, -7, 5, 31}, {-12, 13, -8, -4,-32}};
     std::vector<std::vector<double>> matrixGETP = {{-7, 2, -3, 4, -12}, {5, -1, 14, -1, 13}, {1, 9, -7, 13, 31}, {-12, 13, -8, -4,-32}};
     
@@ -62,27 +62,27 @@ int main() {
 
     std::vector<std::vector<double>> Achol = {{20, -1, 3, 4}, {6 ,23, 4, 3}, {7, 21, 46, 9}, {-3, -9, 12, 38}};
     std::vector<double> Bchol = {30,-10,20,-14};
-    try {
-        results =choleskyMethod(Achol,Bchol);
-    }
-    catch (IterException &e) {
-        std::cout << e.what() << std::endl;
-        exit(EXIT_FAILURE);
-    }
-    int i =1;
-    //Does not apply to Total Pivot given marks vector
-    for (double r : results) {
-        std::cout << "X" << i << " :" << std::setprecision(10) << r << std::endl;
-        i++;
-    }
-
     // try {
-    //     results = solveIterative(matrix, b, init, 10e-5, 2000, jacobi, absNorm);
+    //     results =croMethod(matrix,b);
     // }
     // catch (IterException &e) {
     //     std::cout << e.what() << std::endl;
     //     exit(EXIT_FAILURE);
     // }
+    // int i =1;
+    // //Does not apply to Total Pivot given marks vector
+    // for (double r : results) {
+    //     std::cout << "X" << i << " :" << std::setprecision(10) << r << std::endl;
+    //     i++;
+    // }
+
+    try {
+        results = solveIterative(matrix, b, init, 10e-5, 2000, jacobi, absNorm);
+    }
+    catch (IterException &e) {
+        std::cout << e.what() << std::endl;
+        exit(EXIT_FAILURE);
+    }
 
     // std::vector<std::vector<double>> matrix = {{20, -1, 3, 4}, {6, 23, 4, 3}, {7, 21, 46, 9}, {-3, -9, 12, 38}};
     // std::vector<double> b = {30,-10,20,-14};

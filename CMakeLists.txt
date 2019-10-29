@@ -48,6 +48,8 @@ set(SOURCES src/main_test.cpp
             src/systemsOfEquations/iterativeMethods/jacobi.h
             src/systemsOfEquations/iterativeMethods/solveIterative.cpp
             src/systemsOfEquations/iterativeMethods/solveIterative.h
+            src/interpolation/newton.cpp
+            src/interpolation/newton.h
             lib/interval.h
             lib/statusConstants.h
             lib/exceptions.h
