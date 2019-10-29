@@ -23,6 +23,7 @@
 #include "systemsOfEquations/iterativeMethods/gaussSeidel.h"
 
 #include "interpolation/newton.h"
+#include "interpolation/lagrange.h"
 
 #include "../lib/statusConstants.h"
 #include "../lib/exceptions.h"
@@ -70,7 +71,7 @@ int main() {
     //try {
             
             double b = 0.5;
-            __newtonInterpolation(5,2.5,x,y);
+            __lagrangeInterpolation(5,2.5,x,y);
     // }
     // catch (IterException &e) {
     //     std::cout << e.what() << std::endl;

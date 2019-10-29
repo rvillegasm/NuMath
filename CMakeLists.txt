@@ -50,6 +50,8 @@ set(SOURCES src/main_test.cpp
             src/systemsOfEquations/iterativeMethods/solveIterative.h
             src/interpolation/newton.cpp
             src/interpolation/newton.h
+            src/interpolation/lagrange.cpp
+            src/interpolation/lagrange.h
             lib/interval.h
             lib/statusConstants.h
             lib/exceptions.h
