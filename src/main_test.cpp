@@ -22,6 +22,8 @@
 #include "systemsOfEquations/iterativeMethods/jacobi.h"
 #include "systemsOfEquations/iterativeMethods/gaussSeidel.h"
 
+#include "interpolation/newton.h"
+
 #include "../lib/statusConstants.h"
 #include "../lib/exceptions.h"
 #include "../lib/errorFunctions.h"
@@ -49,7 +51,7 @@ std::string helperFunction2;
 
 int main() {
 
-    std::vector<std::vector<double>> matrix = {{34, -5, 6, 12}, {-9, 43, 21, -8}, {-12, 4, 75, 22}, {7, 5, -13, 65}};
+    /* std::vector<std::vector<double>> matrix = {{34, -5, 6, 12}, {-9, 43, 21, -8}, {-12, 4, 75, 22}, {7, 5, -13, 65}};
     std::vector<double> b = {37,123,16,9};
     std::vector<double> results;
     std::vector<double> init = {1,2,3,4};
@@ -61,28 +63,33 @@ int main() {
     std::vector<double> Bcrout = {-20,69,96,-32};
 
     std::vector<std::vector<double>> Achol = {{20, -1, 3, 4}, {6 ,23, 4, 3}, {7, 21, 46, 9}, {-3, -9, 12, 38}};
-    std::vector<double> Bchol = {30,-10,20,-14};
-    // try {
-    //     results =croMethod(matrix,b);
+    std::vector<double> Bchol = {30,-10,20,-14}; */
+
+    std::vector<double> x ={2,2.2,2.4,2.6,2.8};
+    std::vector<double> y ={-4.610943901069350,-4.174986500565880,-3.376823619358400,-2.136261964998310,-0.355353228902949};
+    //try {
+            
+            double b = 0.5;
+            __newtonInterpolation(5,2.5,x,y);
     // }
     // catch (IterException &e) {
     //     std::cout << e.what() << std::endl;
     //     exit(EXIT_FAILURE);
     // }
-    // int i =1;
-    // //Does not apply to Total Pivot given marks vector
+    //int i =1;
+    //Does not apply to Total Pivot given marks vector
     // for (double r : results) {
     //     std::cout << "X" << i << " :" << std::setprecision(10) << r << std::endl;
     //     i++;
     // }
 
-    try {
-        results = solveIterative(matrix, b, init, 10e-5, 2000, jacobi, absNorm);
-    }
-    catch (IterException &e) {
-        std::cout << e.what() << std::endl;
-        exit(EXIT_FAILURE);
-    }
+    // try {
+    //     results = solveIterative(matrix, b, init, 10e-5, 2000, jacobi, absNorm);
+    // }
+    // catch (IterException &e) {
+    //     std::cout << e.what() << std::endl;
+    //     exit(EXIT_FAILURE);
+    // }
 
     // std::vector<std::vector<double>> matrix = {{20, -1, 3, 4}, {6, 23, 4, 3}, {7, 21, 46, 9}, {-3, -9, 12, 38}};
     // std::vector<double> b = {30,-10,20,-14};

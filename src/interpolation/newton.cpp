@@ -5,9 +5,10 @@
 #include "newton.h"
 
 
-void __newtonInterpolation(int N, double value, std::vector<double> x, std::vector<double> y){  
-        printf("Newton methof.");      
-        std::vector<std::vector<double>> table;       
+void __newtonInterpolation(int N, double value, std::vector<double> &x, std::vector<double> &y){  
+        
+        printf("Newton method.");      
+        std::vector<std::vector<double>> table(N, std::vector<double>(N));       
         for(int i = 0; i<N;i++){
             table[i][0] = y[i];
         }    
@@ -18,49 +19,56 @@ void __newtonInterpolation(int N, double value, std::vector<double> x, std::vect
                 
             }
         }
-        printf("\ndata table:\n");
-        //__printMatrix(table, N,x);
-        printf("Interpoling method:");
-        //std::string pol = "P(x): "+std::to_string(table[0][0]);
+        printf("\nData table:\n");
+        __printMatrixN(table, N,x);
+        std::string pol = "\nP(x): "+std::to_string(table[0][0]);
         std::string temp = "";
         double result = table[0][0];
         double aux = 1;
         for(int i = 1; i<N;i++){
-           //temp = temp + "(x"+"-"+(x[i-1])+")";
-            //pol = pol + "\n"+(table[i][i]>0?"+":"")+(table[i][i]+"*"+temp);
+            temp = temp + "(x-"+std::to_string(x[i-1])+")";
+            char c = ' ';
+            if(table[i][i]>0){
+                c ='+';
+            }
+            pol = pol + " "+c+(std::to_string(table[i][i])+"*"+temp);
             
             aux = aux * (value-x[i-1]);
             result = result + table[i][i]*aux;
         }
-        //System.out.println(pol);
-        //System.out.println("\nresult:");
-        //System.out.println("f("+value+") = "+ result);
+        printf(pol.c_str());
+        printf("\nResult:");
+        std::string s = "f("+std::to_string(value)+") = "+ std::to_string(result);
+        printf(s.c_str()); 
     }
 
-    /* void __printMatrix(std::vector<std::vector<double>> &matrix, int n, std::vector<double> &x){
-        //System.out.print("Xi");
-        //printSpaces(std::string.valueOf("Xi").length(),30);
+     void __printMatrixN(std::vector<std::vector<double>> &matrix, int n, std::vector<double> &x){
+        printf("Xi");
+        __printSpaces(0,30);
         for(int i=0;i<n;i++){
-            //System.out.print("f"+(i)+"[]");
-            //printSpaces(std::string.valueOf("f"+i+"[]").length(),30);
+            std::string s = "f"+std::to_string(i)+"[]";
+            printf(s.c_str());
+            __printSpaces(s.length(),30);
         }
-        //System.out.println("");
+        printf(" \n");
         for(int i=0; i< n;i++){
-            //System.out.print(x[i]);
-            //printSpaces(std::string.valueOf(x[i]).length(),30);
+            printf(std::to_string(x[i]).c_str());
+            __printSpaces(std::to_string(x[i]).length(),30);
             for(int j=0; j <n; j++){
-                //System.out.print(matrix[i][j]);
-                //printSpaces(std::string.valueOf(matrix[i][j]).length(),30);
+
+                std::string a = std::to_string(matrix[i][j]);
+                printf(a.c_str());
+                __printSpaces(std::to_string(matrix[i][j]).length(),30);
             }
-            //System.out.print("\n");
+            printf("\n");
         }
-        //System.out.println("");
+        printf(" ");
     }
      
     void __printSpaces(int n, int k){
         if(n<k){
-            for(int i = 0; i<k-n;i++){
-                //System.out.print(" ");
+            for(int i = 0; i<(k-n)/2;i++){
+                printf(" ");
             }
         }
     }
@@ -68,7 +76,7 @@ void __newtonInterpolation(int N, double value, std::vector<double> x, std::vect
     std::string __strI(int a, int b){
         std::string str = "";
         for(int i=a;i<=b;i++){
-           //str = str +""+ i;
+           str = str +""+ std::to_string(i);
         }
         return str;
-    } */
+    }  
