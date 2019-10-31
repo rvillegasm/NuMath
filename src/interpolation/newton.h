@@ -1,10 +1,19 @@
 #pragma once
+
 #include <vector>
 #include <string>
-#include <iostream>
+#include "../../lib/point.h"
 
+namespace numath{
+    namespace interpolation {
 
-void __newtonInterpolation(int N, double value, std::vector<double> &x, std::vector<double> &y);
-void __printMatrixN(std::vector<std::vector<double>> &matrix, int n, std::vector<double> &x);
-std::string __strI(int a, int b);
-void __printSpaces(int n, int k);
+        /**
+         * Calculates the polynomial that passes through each
+         * given point using Newton's method.
+         * 
+         * @param points points to calculate the polynomial.
+         */
+        std::string newton(std::vector<numath::Point> &points);
+
+    }
+}

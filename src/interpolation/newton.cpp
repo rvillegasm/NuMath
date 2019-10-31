@@ -1,82 +1,49 @@
-#include <omp.h>
-#include <cstdio>
-#include <string>
-
 #include "newton.h"
 
+#include <vector>
+#include <string>
+#include "../../lib/point.h"
 
-void __newtonInterpolation(int N, double value, std::vector<double> &x, std::vector<double> &y){  
-        
-        printf("Newton method.");      
-        std::vector<std::vector<double>> table(N, std::vector<double>(N));       
-        for(int i = 0; i<N;i++){
-            table[i][0] = y[i];
-        }    
-        
-        for(int i = 0; i<N;i++){
-            for(int j = 1; j<i+1;j++){
-                table[i][j] = (table[i][j-1] - table[i-1][j-1])/(x[i] - x[i-j]);
+namespace numath{
+    namespace interpolation {
+
+        std::string newton(std::vector<numath::Point> &points) {
+
+            const unsigned int N = points.size();
+            double table[N][N];
+
+            std::string result = "";
+
+            // Initialize table with the F(x) values
+            for (unsigned int i = 0; i < N; i++) {
+                table[i][0] = points[i].y;
+            }
+            // Calculate all the values of the table
+            for (unsigned int i = 0; i < N; i++) {
+                for (unsigned int j = 1; j <= i; j++) {
+                    table[i][j] = (table[i][j-1] - table[i-1][j-1]) / (points[i].x - points[i-j].x);
+                }
+            }
+
+            // Build the polynomial
+            for (unsigned int i = 0; i < N; i++) {
+                // calculate each term of the polynomial
+                std::string term;
+                if (i == 0) {
+                    term = std::to_string(table[i][i]);
+                }
+                else {
+                    term = "+" + std::to_string(table[i][i]);
+                }
+                for (unsigned int k = 0; k < i; k++) {
+                    term = term + "*(x-" + std::to_string(points[k].x) + ")";
+                }
                 
+                result = result + term;
             }
-        }
-        printf("\nData table:\n");
-        __printMatrixN(table, N,x);
-        std::string pol = "\nP(x): "+std::to_string(table[0][0]);
-        std::string temp = "";
-        double result = table[0][0];
-        double aux = 1;
-        for(int i = 1; i<N;i++){
-            temp = temp + "(x-"+std::to_string(x[i-1])+")";
-            char c = ' ';
-            if(table[i][i]>0){
-                c ='+';
-            }
-            pol = pol + " "+c+(std::to_string(table[i][i])+"*"+temp);
-            
-            aux = aux * (value-x[i-1]);
-            result = result + table[i][i]*aux;
-        }
-        printf(pol.c_str());
-        printf("\nResult:");
-        std::string s = "f("+std::to_string(value)+") = "+ std::to_string(result);
-        printf(s.c_str()); 
-    }
 
-     void __printMatrixN(std::vector<std::vector<double>> &matrix, int n, std::vector<double> &x){
-        printf("Xi");
-        __printSpaces(0,30);
-        for(int i=0;i<n;i++){
-            std::string s = "f"+std::to_string(i)+"[]";
-            printf(s.c_str());
-            __printSpaces(s.length(),30);
+            return result;
         }
-        printf(" \n");
-        for(int i=0; i< n;i++){
-            printf(std::to_string(x[i]).c_str());
-            __printSpaces(std::to_string(x[i]).length(),30);
-            for(int j=0; j <n; j++){
 
-                std::string a = std::to_string(matrix[i][j]);
-                printf(a.c_str());
-                __printSpaces(std::to_string(matrix[i][j]).length(),30);
-            }
-            printf("\n");
-        }
-        printf(" ");
     }
-     
-    void __printSpaces(int n, int k){
-        if(n<k){
-            for(int i = 0; i<(k-n)/2;i++){
-                printf(" ");
-            }
-        }
-    }
-    
-    std::string __strI(int a, int b){
-        std::string str = "";
-        for(int i=a;i<=b;i++){
-           str = str +""+ std::to_string(i);
-        }
-        return str;
-    }  
+}

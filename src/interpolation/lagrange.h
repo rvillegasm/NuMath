@@ -1,6 +1,19 @@
 #pragma once
+
 #include <vector>
 #include <string>
-#include <iostream>
+#include "../../lib/point.h"
 
- void __lagrangeInterpolation(int n, double value, std::vector<double> &x, std::vector<double> &y);
+namespace numath{
+    namespace interpolation {
+        
+        /**
+         * Calculates the polynomial that passes through each 
+         * given point using Lagrange's method.
+         * 
+         * @param points points to calculate the polynomial.
+         */
+        std::string lagrange(std::vector<numath::Point> &points);
+
+    }
+}
