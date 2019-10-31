@@ -4,62 +4,68 @@
 #include <string>
 #include <cstdio>
 
-std::vector<double> solveIterative(std::vector<std::vector<double>> &A, 
-                                   std::vector<double> &b,
-                                   std::vector<double> &initialValues, 
-                                   double tol, 
-                                   int nIter,
-                                   std::vector<double> (*method)(std::vector<double>&,
-                                                                 std::vector<std::vector<double>>&,
-                                                                 std::vector<double>&),
-                                   double (*errorFunc)(std::vector<double>&,
-                                                       std::vector<double>&)) {
+namespace numath {
+    namespace systemsOfEquations {
 
-    int count;
-    double dispersion;
-    std::vector<double> x0 (initialValues), x1;
+        std::vector<double> solveIterative(std::vector<std::vector<double>> &A, 
+                                           std::vector<double> &b,
+                                           std::vector<double> &initialValues, 
+                                           double tol, 
+                                           int nIter,
+                                           std::vector<double> (*method)(std::vector<double>&,
+                                                                         std::vector<std::vector<double>>&,
+                                                                         std::vector<double>&),
+                                           double (*errorFunc)(std::vector<double>&,
+                                                               std::vector<double>&)) {
 
-    count = 0;
-    dispersion = tol + 1;
+            int count;
+            double dispersion;
+            std::vector<double> x0 (initialValues), x1;
 
-    // BORRAR LUEGO 
-    printf("%5s | ", "nIter");
-    for (unsigned int i = 0; i < initialValues.size(); i++){
-        std::string machete = "X" + std::to_string(i);
-        printf("%10s | ", machete.c_str());
-    }
+            count = 0;
+            dispersion = tol + 1;
 
-    printf("%10s \n", "Error");
+            // BORRAR LUEGO 
+            printf("%5s | ", "nIter");
+            for (unsigned int i = 0; i < initialValues.size(); i++){
+                std::string machete = "X" + std::to_string(i);
+                printf("%10s | ", machete.c_str());
+            }
 
-    printf("%5d | ", count);
-    for (unsigned int i = 0; i < initialValues.size(); i++){
-        printf("%10lf | ", x0[i]);
-    }
-    printf("\n");
+            printf("%10s \n", "Error");
 
-    // BORRAR LUEGO
+            printf("%5d | ", count);
+            for (unsigned int i = 0; i < initialValues.size(); i++){
+                printf("%10lf | ", x0[i]);
+            }
+            printf("\n");
 
-    while (dispersion > tol && count < nIter) {
-        x1 = method(x0, A, b);
-        dispersion = errorFunc(x1, x0);
-        x0 = x1;
-        count++;
+            // BORRAR LUEGO
 
-        // BORRAR LUEGO
-        printf("%5d | ", count);
-        for (unsigned int i = 0; i < initialValues.size(); i++){
-            printf("%10lf | ", x1[i]);
+            while (dispersion > tol && count < nIter) {
+                x1 = method(x0, A, b);
+                dispersion = errorFunc(x1, x0);
+                x0 = x1;
+                count++;
+
+                // BORRAR LUEGO
+                printf("%5d | ", count);
+                for (unsigned int i = 0; i < initialValues.size(); i++){
+                    printf("%10lf | ", x1[i]);
+                }
+                printf("%10e \n", dispersion);
+
+                // BORRAR LUEGO
+            }
+
+            if (dispersion < tol) {
+                return x1;
+            }
+            else {
+                throw IterException();
+            }
+
         }
-        printf("%10e \n", dispersion);
 
-        // BORRAR LUEGO
     }
-
-    if (dispersion < tol) {
-        return x1;
-    }
-    else {
-        throw IterException();
-    }
-
 }

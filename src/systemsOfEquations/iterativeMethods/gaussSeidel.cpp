@@ -1,27 +1,33 @@
 #include "gaussSeidel.h"
 
-std::vector<double> gaussSeidel(std::vector<double> &variables, 
-                                std::vector<std::vector<double>> &matrix,
-                                std::vector<double> &indepTerms) {
-    
-    double sum;
-    std::vector<double> results (indepTerms.size());
-    const int N = variables.size();
+namespace numath {
+    namespace systemsOfEquations {
 
-    // already does the same as: for i = 0 to N-1 do x1[i] := x0[i]
-    results = variables;
+        std::vector<double> gaussSeidel(std::vector<double> &variables, 
+                                        std::vector<std::vector<double>> &matrix,
+                                        std::vector<double> &indepTerms) {
+            
+            double sum;
+            std::vector<double> results (indepTerms.size());
+            const int N = variables.size();
 
-    for (int i = 0; i < N; i++) {
+            // already does the same as: for i = 0 to N-1 do x1[i] := x0[i]
+            results = variables;
 
-        sum = 0;
-        for (int j = 0; j < N; j++) {
-            if (j != i) {
-                sum = sum + (matrix[i][j] * results[j]);
+            for (int i = 0; i < N; i++) {
+
+                sum = 0;
+                for (int j = 0; j < N; j++) {
+                    if (j != i) {
+                        sum = sum + (matrix[i][j] * results[j]);
+                    }
+                }
+
+                results[i] = (indepTerms[i] - sum) / matrix[i][i];
             }
+
+            return results;
         }
 
-        results[i] = (indepTerms[i] - sum) / matrix[i][i];
     }
-
-    return results;
 }

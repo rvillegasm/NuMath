@@ -1,56 +1,61 @@
+#pragma once
 #include <exception>
 
-/**
- * Exception for when the number of iterations runs out.
- */
-struct IterException : public std::exception {
+namespace numath {
 
-    const char* what() const noexcept {
-        return "Could not find anything with the specified number of iterations";
-    }
+    /**
+     * Exception for when the number of iterations runs out.
+     */
+    struct IterException : public std::exception {
 
-};
+        const char* what() const noexcept {
+            return "Could not find anything with the specified number of iterations";
+        }
 
-/**
- * Exception for when the interval isn't valid.
- */
-struct IntervalException : public std::exception {
+    };
 
-    const char* what() const noexcept {
-        return "Invalid interval entered";
-    }
+    /**
+     * Exception for when the interval isn't valid.
+     */
+    struct IntervalException : public std::exception {
 
-};
+        const char* what() const noexcept {
+            return "Invalid interval entered";
+        }
 
-/**
- * Exception for when the derivative is zero. 
- */
-struct DerivativeException : public std::exception {
+    };
 
-    const char* what() const noexcept {
-        return "Derivative equals 0. Possible multiple roots found";
-    }
+    /**
+     * Exception for when the derivative is zero. 
+     */
+    struct DerivativeException : public std::exception {
 
-};
+        const char* what() const noexcept {
+            return "Derivative equals 0. Possible multiple roots found";
+        }
 
-/**
- * Exception for when the denominator of the secant mehtod is zero. 
- */
-struct DenominatorException : public std::exception {
+    };
 
-    const char* what() const noexcept {
-        return "Denominator equals 0";
-    }
+    /**
+     * Exception for when the denominator of the secant mehtod is zero. 
+     */
+    struct DenominatorException : public std::exception {
 
-};
+        const char* what() const noexcept {
+            return "Denominator equals 0";
+        }
 
-/**
- * Exception for when the denominator of the secant mehtod is zero. 
- */
-struct SolutionException : public std::exception {
+    };
 
-    const char* what() const noexcept {
-        return "The system does not have an unique solution";
-    }
+    /**
+     * Exception for when the denominator of the secant mehtod is zero. 
+     */
+    struct SolutionException : public std::exception {
 
-};
+        const char* what() const noexcept {
+            return "The system does not have an unique solution";
+        }
+
+    };
+
+}
