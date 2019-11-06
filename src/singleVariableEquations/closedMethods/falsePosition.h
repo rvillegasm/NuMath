@@ -1,5 +1,6 @@
 #pragma once
 
+#include <vector>
 namespace numath {
     namespace singleVariableEquations {
 
@@ -27,7 +28,7 @@ namespace numath {
          *     IterException: When the max number of iterations are exceeded.
          *     IntervalException: When the interval does not contain a root.
          */
-        double falsePosition(double (*func)(double), double xi, double xu, int nIter, double tol, const char *errorType);
+        double falsePosition(double (*func)(double), double xi, double xu, int nIter, double tol, const char *errorType, std::vector<std::vector<double>> &table);
 
     }
 }

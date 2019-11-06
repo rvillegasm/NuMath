@@ -1,18 +1,15 @@
-#include <stdio.h>
 
 #include <math.h>
 #include <cstring>
+#include <vector>
 #include "bisection.h"
-#include "../printTable.h"
 
-#include "../../../lib/statusConstants.h"
 #include "../../../lib/exceptions.h"
-#include "../../../lib/methodNamesConstants.h"
 
 namespace numath {
     namespace singleVariableEquations {
 
-        double bisection(double (*func)(double), double xi, double xu, int nIter, double tol, const char *errorType) {
+        double bisection(double (*func)(double), double xi, double xu, int nIter, double tol, const char *errorType, std::vector<std::vector<double>> &table) {
 
             int count;
             double xm;
@@ -37,10 +34,10 @@ namespace numath {
                 count = 1;
                 error = tol + 1;
                 
-                printf("Method: Bisection\n");
-                printf("%20s | %20s | %20s | %20s | %20s | %20s |\n", "iter", "Xi", "Xu", "Xm", "f(Xm)", "Error");
-                double printData[5] = {xi, xu, xm, fxm, error};
-                printTable(BISECTION, count, printData);
+                // Add info to the table
+                std::vector<double> iterVector1 = {(double) count, xm, fxm, error};
+                table.push_back(iterVector1);
+                // ---------------------
 
                 while (error > tol && fxm != 0 && count < nIter) {
                     if (fxi * fxm < 0) {
@@ -56,8 +53,11 @@ namespace numath {
                     fxm = func(xm);
                     error = ((strcmp(errorType, "abs") == 0) ? fabs(xm - lastXm) : fabs((xm - lastXm) / xm));
                     count++;
-                    double printData[5] = {xi, xu, xm, fxm, error};
-                    printTable(BISECTION, count, printData);
+
+                    // Add info to the table
+                    std::vector<double> iterVector2 = {(double) count, xm, fxm, error};
+                    table.push_back(iterVector1);
+                    // ---------------------
                 }
                 if (fxm == 0) {
                     // exact value found

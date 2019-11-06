@@ -1,6 +1,3 @@
-#include <stdio.h>
-#include "../../../lib/methodNamesConstants.h"
-#include "../printTable.h"
 
 #include "fixedPoint.h"
 #include <cmath>
@@ -10,17 +7,17 @@
 namespace numath {
     namespace singleVariableEquations {
 
-        double fixedPoint(double (*func)(double), double (*gFunc)(double), double xa, int nIter, double tol, const char *errorType) {
+        double fixedPoint(double (*func)(double), double (*gFunc)(double), double xa, int nIter, double tol, const char *errorType, std::vector<std::vector<double>> &table) {
             
             double fx = func(xa);
             int count = 0;
             double error = tol + 1;
             double xn = 0;
 
-            printf("Method: Fixed Point\n");
-            printf("%20s | %20s | %20s | %20s |\n", "iter", "Xn", "f(Xn)", "Error");
-            double printData[3] = {xa, fx, error};
-            printTable(FIXED_POINT, count, printData);
+            // Add info to the table
+            std::vector<double> iterVector1 = {(double) count, xa, fx, error};
+            table.push_back(iterVector1);
+            // ---------------------
 
             while (fx != 0 && error > tol && count < nIter) {
                 xn = gFunc(xa);
@@ -28,9 +25,11 @@ namespace numath {
                 error = ((strcmp(errorType, "abs") == 0) ? fabs(xn - xa) : fabs((xn - xa) / xn));
                 xa = xn;
                 count++;
-                
-                double printData[3] = {xn, fx, error};
-                printTable(FIXED_POINT, count, printData);
+
+                // Add info to the table
+                std::vector<double> iterVector2 = {(double) count, xn, fx, error};
+                table.push_back(iterVector2);
+                // ---------------------
             }
 
             if (fx == 0) {

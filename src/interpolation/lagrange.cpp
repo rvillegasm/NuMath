@@ -14,22 +14,22 @@ namespace numath{
             
             for (unsigned int i = 0; i < N; i++) {
                 
-                double product = 1;
                 std::string li = "";
                 for (unsigned int p = 0; p < N; p++) {
                     if (p != i) {
                         li = li + "((x-" + std::to_string(points[p].x) + ")";
-                        li = li + "/(" + std::to_string(points[i].x - points[p].x) + "))";
+                        li = li + "/(" + std::to_string(points[i].x - points[p].x) + "))*";
+                        
                     }
                 }
 
                 if (i == 0){
                     // Do not add the terms together
-                    result = result + li + "*" + std::to_string(points[i].y);
+                    result = result + li + std::to_string(points[i].y);
                 }
                 else {
                     // Add the terms together
-                    result = result + "+" + li + "*" + std::to_string(points[i].y);
+                    result = result + "+" + li + std::to_string(points[i].y);
                 }
             }
 

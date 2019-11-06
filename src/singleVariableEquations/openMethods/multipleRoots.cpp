@@ -1,6 +1,4 @@
 #include <stdio.h>
-#include "../../../lib/methodNamesConstants.h"
-#include "../printTable.h"
 
 #include <cmath>
 #include <cstring>
@@ -11,7 +9,7 @@
 namespace numath {
     namespace singleVariableEquations {
 
-        double multipleRoots(double (*func)(double), double (*dFunc)(double), double (*d2Func)(double), double x0, int nIter, double tol, const char *errorType) {
+        double multipleRoots(double (*func)(double), double (*dFunc)(double), double (*d2Func)(double), double x0, int nIter, double tol, const char *errorType, std::vector<std::vector<double>> &table) {
             
             int count;
             double fx, dfx, d2fx;
@@ -25,10 +23,10 @@ namespace numath {
             error = tol + 1;
             count = 0;
 
-            printf("Method: Multiple Roots\n");
-            printf("%20s | %20s | %20s | %20s | %20s | %20s |\n", "iter", "Xn", "f(Xn)", "f'(Xn)", "f''(Xn)", "Error");
-            double printData[5] = {x0, fx, dfx, d2fx, error};
-            printTable(MULT_ROOTS, count, printData);
+            // Add info to the table
+            std::vector<double> iterVector1 = {(double) count, x0, fx, error};
+            table.push_back(iterVector1);
+            // ---------------------
 
             while (error > tol && fx != 0 && x1_denominator != 0 && count < nIter) {
                 x1 = x0 - ((fx * dfx) / x1_denominator);
@@ -40,8 +38,10 @@ namespace numath {
                 count++;
                 x0 = x1;
 
-                double printData[5] = {x0, fx, dfx, d2fx, error};
-                printTable(MULT_ROOTS, count, printData);
+                // Add info to the table
+                std::vector<double> iterVector2 = {(double) count, x0, fx, error};
+                table.push_back(iterVector2);
+                // ---------------------
             }
 
             if (fx == 0) {

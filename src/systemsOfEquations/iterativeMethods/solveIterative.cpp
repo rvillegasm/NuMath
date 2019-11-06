@@ -16,7 +16,8 @@ namespace numath {
                                                                          std::vector<std::vector<double>>&,
                                                                          std::vector<double>&),
                                            double (*errorFunc)(std::vector<double>&,
-                                                               std::vector<double>&)) {
+                                                               std::vector<double>&),
+                                           std::vector<std::vector<double>> &table) {
 
             int count;
             double dispersion;
@@ -25,22 +26,11 @@ namespace numath {
             count = 0;
             dispersion = tol + 1;
 
-            // BORRAR LUEGO 
-            printf("%5s | ", "nIter");
-            for (unsigned int i = 0; i < initialValues.size(); i++){
-                std::string machete = "X" + std::to_string(i);
-                printf("%10s | ", machete.c_str());
-            }
-
-            printf("%10s \n", "Error");
-
-            printf("%5d | ", count);
-            for (unsigned int i = 0; i < initialValues.size(); i++){
-                printf("%10lf | ", x0[i]);
-            }
-            printf("\n");
-
-            // BORRAR LUEGO
+            // Add info to the table
+            std::vector<double> iterVector1 = {(double) count};
+            iterVector1.emplace_back(initialValues);
+            table.push_back(iterVector1);
+            // ---------------------
 
             while (dispersion > tol && count < nIter) {
                 x1 = method(x0, A, b);
@@ -48,14 +38,12 @@ namespace numath {
                 x0 = x1;
                 count++;
 
-                // BORRAR LUEGO
-                printf("%5d | ", count);
-                for (unsigned int i = 0; i < initialValues.size(); i++){
-                    printf("%10lf | ", x1[i]);
-                }
-                printf("%10e \n", dispersion);
-
-                // BORRAR LUEGO
+                // Add info to the table
+                std::vector<double> iterVector2 = {(double) count};
+                iterVector2.emplace_back(x1);
+                iterVector2.push_back(dispersion);
+                table.push_back(iterVector2);
+                // ---------------------
             }
 
             if (dispersion < tol) {

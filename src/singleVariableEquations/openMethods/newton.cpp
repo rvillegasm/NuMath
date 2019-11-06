@@ -1,6 +1,4 @@
 #include <stdio.h>
-#include "../../../lib/methodNamesConstants.h"
-#include "../printTable.h"
 
 #include <cmath>
 #include <cstring>
@@ -10,7 +8,7 @@
 namespace numath {
     namespace singleVariableEquations {
 
-        double newton(double (*func)(double), double (*dFunc)(double), double x0, int nIter, double tol, const char *errorType) {
+        double newton(double (*func)(double), double (*dFunc)(double), double x0, int nIter, double tol, const char *errorType, std::vector<std::vector<double>> &table) {
 
             double fx = func(x0);
             double dfx = dFunc(x0);
@@ -18,10 +16,10 @@ namespace numath {
             int count = 0;
             double error = tol + 1;
 
-            printf("Method: Newton\n");
-            printf("%20s | %20s | %20s | %20s | %20s |\n", "iter", "Xn", "f(Xn)", "f'(Xn)", "Error");
-            double printData[4] = {x0, fx, dfx, error};
-            printTable(NEWTON, count, printData);
+            // Add info to the table
+            std::vector<double> iterVector1 = {(double) count, x0, fx, error};
+            table.push_back(iterVector1);
+            // ---------------------
 
             while (error > tol && fx != 0 && dfx != 0 && count < nIter) {
                 x1 = x0 - fx/dfx;
@@ -31,8 +29,10 @@ namespace numath {
                 x0 = x1;
                 count++;
 
-                double printData[4] = {x1, fx, dfx, error};
-                printTable(NEWTON, count, printData);
+                // Add info to the table
+                std::vector<double> iterVector2 = {(double) count, x1, fx, error};
+                table.push_back(iterVector2);
+                // ---------------------
             }
             
             if (fx == 0) {

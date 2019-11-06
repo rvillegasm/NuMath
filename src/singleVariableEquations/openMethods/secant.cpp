@@ -1,6 +1,3 @@
-#include <stdio.h>
-#include "../../../lib/methodNamesConstants.h"
-#include "../printTable.h"
 
 #include <cmath>
 #include <cstring>
@@ -11,7 +8,7 @@
 namespace numath {
     namespace singleVariableEquations {
 
-        double secant(double (*func)(double), double x0, double x1, int nIter, double tol, const char *errorType) {
+        double secant(double (*func)(double), double x0, double x1, int nIter, double tol, const char *errorType, std::vector<std::vector<double>> &table) {
             
             int count;
             double fx0, fx1;
@@ -28,12 +25,12 @@ namespace numath {
                 error = tol + 1;
                 x2_denominator = fx1 - fx0;
 
-                printf("Method: Secant\n");
-                printf("%20s | %20s | %20s | %20s |\n", "iter", "Xn", "f(Xn)", "Error");
-                double printData_1[3] = {x0, fx0, error};
-                printTable(SECANT, count, printData_1);
-                double printData_2[3] = {x1, fx1, error};
-                printTable(SECANT, count, printData_2);
+                // Add info to the table
+                std::vector<double> iterVector1 = {(double) count, x0, fx0, error};
+                table.push_back(iterVector1);
+                std::vector<double> iterVector2 = {(double) count, x1, fx1, error};
+                table.push_back(iterVector2);
+                // ---------------------
 
                 while (error > tol && fx1 != 0 && x2_denominator != 0 && count < nIter) {
                     x2 = x1 - (fx1 * (x1 - x0) / x2_denominator);
@@ -45,8 +42,10 @@ namespace numath {
                     x2_denominator = fx1 - fx0;
                     count++;
 
-                    double printData[3] = {x1, fx1, error};
-                    printTable(SECANT, count, printData);
+                    // Add info to the table
+                    std::vector<double> iterVector3 = {(double) count, x1, fx1, error};
+                    table.push_back(iterVector3);
+                    // ---------------------
                 }
 
                 if (fx1 == 0) {

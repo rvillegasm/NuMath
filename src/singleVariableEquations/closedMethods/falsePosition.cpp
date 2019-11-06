@@ -1,17 +1,15 @@
-#include <stdio.h>
 #include <math.h>
 #include <cstring>
-#include "falsePosition.h"
-#include "../printTable.h"
+#include <vector>
 
-#include "../../../lib/statusConstants.h"
+#include "falsePosition.h"
+
 #include "../../../lib/exceptions.h"
-#include "../../../lib/methodNamesConstants.h"
 
 namespace numath {
     namespace singleVariableEquations {
 
-        double falsePosition(double (*func)(double), double xi, double xu, int nIter, double tol, const char *errorType) {
+        double falsePosition(double (*func)(double), double xi, double xu, int nIter, double tol, const char *errorType, std::vector<std::vector<double>> &table) {
 
             int count;
             double xm;
@@ -36,10 +34,10 @@ namespace numath {
                 count = 1;
                 error = tol + 1;
 
-                printf("Method: False Position\n");
-                printf("%20s | %20s | %20s | %20s | %20s | %20s | %20s | %20s |\n", "iter", "Xi", "Xu", "f(Xi)", "f(Xu)", "Xm", "f(Xm)", "Error");
-                double printData[7] = {xi, xu, fxi, fxu, xm, fxm, error};
-                printTable(FALSE_POSITION, count, printData);
+                // Add info to the table
+                std::vector<double> iterVector1 = {(double) count, xm, fxm, error};
+                table.push_back(iterVector1);
+                // ---------------------
 
                 while (error > tol && fxm != 0 && count < nIter) {
                     if (fxi * fxm < 0) {
@@ -55,8 +53,11 @@ namespace numath {
                     fxm = func(xm);
                     error = ((strcmp(errorType, "abs") == 0) ? fabs(xm - lastXm) : fabs((xm - lastXm) / xm));
                     count++;
-                    double printData[7] = {xi, xu, fxi, fxu, xm, fxm, error};
-                    printTable(FALSE_POSITION, count, printData);
+
+                    // Add info to the table
+                    std::vector<double> iterVector2 = {(double) count, xm, fxm, error};
+                    table.push_back(iterVector2);
+                    // ---------------------
                 }
                 if (fxm == 0) {
                     // exact value found

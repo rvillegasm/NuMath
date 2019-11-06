@@ -26,7 +26,7 @@ namespace numath {
          *     IterException: When the max number of iterations are exceeded.
          *     IntervalException: When the interval does not contain a root.
          */
-        double bisection(double (*func)(double), double xi, double xu, int nIter, double tol, const char *errorType);
+        double bisection(double (*func)(double), double xi, double xu, int nIter, double tol, const char *errorType, std::vector<std::vector<double>> &table);
 
     }
 }

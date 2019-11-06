@@ -14,8 +14,6 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 
 set(SOURCES src/main_test.cpp
-            src/singleVariableEquations/printTable.cpp
-            src/singleVariableEquations/printTable.h
             src/singleVariableEquations/incrementalSearch.cpp
             src/singleVariableEquations/incrementalSearch.h
             src/singleVariableEquations/closedMethods/bisection.cpp
@@ -53,9 +51,7 @@ set(SOURCES src/main_test.cpp
             src/interpolation/lagrange.cpp
             src/interpolation/lagrange.h
             lib/interval.h
-            lib/statusConstants.h
             lib/exceptions.h
-            lib/methodNamesConstants.h
             lib/errorFunctions.h
             external/tinyExpression/tinyexpr.c
             external/tinyExpression/tinyexpr.h)

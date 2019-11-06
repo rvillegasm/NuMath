@@ -1,7 +1,6 @@
 #include "incrementalSearch.h"
-#include "printTable.h"
-#include <stdio.h>
-#include "../../lib/methodNamesConstants.h"
+
+#include <vector>
 
 namespace numath {
     namespace singleVariableEquations {
@@ -29,7 +28,7 @@ namespace numath {
             so the algorithm returns an interval from 0 to 0, 
             and we specify that it wasn't successful.
         */
-        Interval incrementalSearch(double (*func)(double), double x0, double delta, int nIter) {
+        Interval incrementalSearch(double (*func)(double), double x0, double delta, int nIter, std::vector<std::vector<double>> &table) {
             
             double fx0, x1, fx1;
             int count;
@@ -48,26 +47,31 @@ namespace numath {
             else {
                 count = 0;
 
-                printf("Method: Incremental Search\n");
-                printf("%20s | %20s | %20s |\n", "iter", "X", "f(X)");
-                double printData_1[2] = {x0, fx0};
-                printTable(INCR_SEARCH, count, printData_1);
+                // Add info to the table
+                std::vector<double> iterVector1 = {(double) count, x0, fx0};
+                table.push_back(iterVector1);
+                // ---------------------
 
                 x1 = x0 + delta;
                 fx1 = func(x1);
                 count++;
-                
-                double printData_2[2] = {x1, fx1};
-                printTable(INCR_SEARCH, count, printData_2);
 
+                // Add info to the table
+                std::vector<double> iterVector2 = {(double) count, x1, fx1};
+                table.push_back(iterVector2);
+                // ---------------------
+                
                 while (fx0 * fx1 > 0 && count < nIter) {
                     x0 = x1;
                     fx0 = fx1;
                     x1 = x0 + delta;
                     fx1 = func(x1);
                     count++;
-                    double printData_3[2] = {x1, fx1};
-                    printTable(INCR_SEARCH, count, printData_3);
+
+                    // Add info to the table
+                    std::vector<double> iterVector3 = {(double) count, x1, fx1};
+                    table.push_back(iterVector3);
+                    // ---------------------
                 }
 
                 if (fx1 == 0) {
