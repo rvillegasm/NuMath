@@ -28,7 +28,7 @@ namespace numath {
 
             // Add info to the table
             std::vector<double> iterVector1 = {(double) count};
-            iterVector1.emplace_back(initialValues);
+            iterVector1.insert(iterVector1.end(), initialValues.begin(), initialValues.end());
             table.push_back(iterVector1);
             // ---------------------
 
@@ -40,7 +40,7 @@ namespace numath {
 
                 // Add info to the table
                 std::vector<double> iterVector2 = {(double) count};
-                iterVector2.emplace_back(x1);
+                iterVector2.insert(iterVector2.end(), x1.begin(), x1.end());
                 iterVector2.push_back(dispersion);
                 table.push_back(iterVector2);
                 // ---------------------

@@ -7,13 +7,13 @@ if(" ${CMAKE_SOURCE_DIR}" STREQUAL " ${CMAKE_BINARY_DIR}")
   You should create a separate directory for build files.")
 endif()
 
-project(NuMath)
+project(numath)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
 
-set(SOURCES src/main_test.cpp
+set(SOURCES 
             src/singleVariableEquations/incrementalSearch.cpp
             src/singleVariableEquations/incrementalSearch.h
             src/singleVariableEquations/closedMethods/bisection.cpp
@@ -56,12 +56,12 @@ set(SOURCES src/main_test.cpp
             external/tinyExpression/tinyexpr.c
             external/tinyExpression/tinyexpr.h)
 
-add_executable(NuMath ${SOURCES})
+add_library(numath STATIC ${SOURCES})
 
 find_package(OpenMP)
 if(OpenMP_CXX_FOUND)
     # message("OpenMP Found...")
-    target_link_libraries(NuMath PUBLIC OpenMP::OpenMP_CXX)
+    target_link_libraries(numath PUBLIC OpenMP::OpenMP_CXX)
 else()
     message(FATAL_ERROR "Error: OpenMP not found!. Aborting...")
 endif()
