@@ -55,6 +55,8 @@ set(SOURCES main.cpp
             src/interpolation/linearSpline.h
             src/interpolation/quadraticSpline.cpp
             src/interpolation/quadraticSpline.h
+            src/interpolation/cubicSpline.cpp
+            src/interpolation/cubicSpline.h
             lib/interval.h
             lib/exceptions.h
             lib/errorFunctions.cpp

@@ -22,6 +22,7 @@
 #include "src/interpolation/lagrange.h"
 #include "src/interpolation/linearSpline.h"
 #include "src/interpolation/quadraticSpline.h"
+#include "src/interpolation/cubicSpline.h"
 
 #include "lib/errorFunctions.h"
 #include "lib/interval.h"

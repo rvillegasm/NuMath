@@ -50,7 +50,7 @@ int main() {
     //     printf("Parse error at %d\n", err);
     // }
 
-    std::pair<std::vector<std::vector<double>>, std::vector<double>> pf = numath::interpolation::quadraticSpline(points);
+    std::pair<std::vector<std::vector<double>>, std::vector<double>> pf = numath::interpolation::cubicSpline(points);
 
     for (std::vector<double> row : pf.first) {
         for (double val : row) {
