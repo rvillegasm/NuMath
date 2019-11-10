@@ -6,9 +6,9 @@
 namespace numath {
     namespace interpolation {
 
-        PiecewiseFunction quadraticSpline(std::vector<numath::Point> &points) {
+        std::pair<std::vector<std::vector<double>>, std::vector<double>> quadraticSpline(std::vector<numath::Point> &points) {
 
-            PiecewiseFunction spline;
+            std::pair<std::vector<std::vector<double>>, std::vector<double>> splineMatrix;
 
             std::vector<std::vector<double>> matrix;
             std::vector<double> indepTerms;
@@ -97,7 +97,9 @@ namespace numath {
             matrix.push_back(row);
             indepTerms.push_back(0);
 
-            // Solve the resulting system of equations 
+            splineMatrix = std::make_pair(matrix, indepTerms);            
+
+            return splineMatrix;
 
             // TODO: solve the system (using total pivot), create the piecewise function and return
 
