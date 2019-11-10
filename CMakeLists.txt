@@ -11,9 +11,10 @@ project(numath)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
 
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
+# set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
 
-set(SOURCES 
+set(SOURCES main.cpp
             src/singleVariableEquations/incrementalSearch.cpp
             src/singleVariableEquations/incrementalSearch.h
             src/singleVariableEquations/closedMethods/bisection.cpp
@@ -50,13 +51,21 @@ set(SOURCES
             src/interpolation/newton.h
             src/interpolation/lagrange.cpp
             src/interpolation/lagrange.h
+            src/interpolation/linearSpline.cpp
+            src/interpolation/linearSpline.h
+            src/interpolation/quadraticSpline.cpp
+            src/interpolation/quadraticSpline.h
             lib/interval.h
             lib/exceptions.h
+            lib/errorFunctions.cpp
             lib/errorFunctions.h
+            lib/piecewiseFunction.h
             external/tinyExpression/tinyexpr.c
-            external/tinyExpression/tinyexpr.h)
+            external/tinyExpression/tinyexpr.h
+            numath.h)
 
-add_library(numath STATIC ${SOURCES})
+add_executable(numath "${SOURCES}")
+# add_library(numath STATIC ${SOURCES})
 
 find_package(OpenMP)
 if(OpenMP_CXX_FOUND)
