@@ -48,12 +48,23 @@ namespace numath {
     };
 
     /**
-     * Exception for when the denominator of the secant mehtod is zero. 
+     * Exception for when there's more than one solution
      */
     struct SolutionException : public std::exception {
 
         const char* what() const noexcept {
             return "The system does not have an unique solution";
+        }
+
+    };
+
+    /**
+     * Exception for when a non existent method is called
+     */
+    struct MethodException : public std::exception {
+
+        const char* what() const noexcept {
+            return "The required methos does not exist";
         }
 
     };

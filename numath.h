@@ -23,6 +23,8 @@
 #include "src/interpolation/linearSpline.h"
 #include "src/interpolation/quadraticSpline.h"
 
+#include "src/differentiation/differentiation.h"
+
 #include "lib/errorFunctions.h"
 #include "lib/interval.h"
 #include "lib/piecewiseFunction.h"
