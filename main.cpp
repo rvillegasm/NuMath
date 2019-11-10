@@ -1,5 +1,6 @@
 #include "numath.h"
-
+#include <stdlib.h>
+#include <omp.h>
 // #include "external/tinyExpression/tinyexpr.h"
 
 #include <iostream>
@@ -26,6 +27,25 @@ int main() {
     points.push_back(p3);
     points.push_back(p4);
 
+    std::vector<std::vector<double>> SGE ={
+        {18,12,3,-5,120},
+        {6,14,-3,4,-18},
+        {3,-6,35,-2,36},
+        {12,-7,4,-56,45}
+    };
+
+    std::vector<std::vector<double>> SGEB (20,std::vector<double> (20,0));
+
+    for(int i =0;i<SGEB.size();i++){
+        for(int j =0;j<SGEB.size();j++){
+            if(i != j){
+                SGEB[i][j]= rand()%10-5;
+            }else if(i == j){
+                SGEB[i][j]= rand()%30+15;
+            }
+        }
+    }
+
     // numath::PiecewiseFunction spline = numath::interpolation::linearSpline(points);
     // for (std::string function : spline.functions) {
     //     std::cout << function << std::endl;
@@ -49,18 +69,12 @@ int main() {
     // else {
     //     printf("Parse error at %d\n", err);
     // }
-
-    std::pair<std::vector<std::vector<double>>, std::vector<double>> pf = numath::interpolation::cubicSpline(points);
-
-    for (std::vector<double> row : pf.first) {
-        for (double val : row) {
-            std::cout << val << " ";
-        }
-        std::cout << std::endl;
-    }
-
-    for (double val : pf.second) {
-        std::cout << val << std::endl;
+    double start_time = omp_get_wtime();
+    std::vector<double> results = numath::systemsOfEquations::simpleGaussianElimination(SGEB);
+    double end_time = omp_get_wtime();
+    printf("It took: %f\n", end_time - start_time);
+    for(int i =1;i<=results.size();i++){
+        printf("X%d = %.20f\n",i,results[i-1]);
     }
 
 }
