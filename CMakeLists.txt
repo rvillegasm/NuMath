@@ -59,6 +59,12 @@ set(SOURCES main.cpp
             src/differentiation/differentiation.h
             src/interpolation/cubicSpline.cpp
             src/interpolation/cubicSpline.h
+            src/integration/trapezium.cpp
+            src/integration/trapezium.h
+            src/integration/simpsonOneThird.cpp
+            src/integration/simpsonOneThird.h
+            src/integration/simpsonThreeEighths.cpp
+            src/integration/simpsonThreeEighths.h
             lib/interval.h
             lib/exceptions.h
             lib/errorFunctions.cpp

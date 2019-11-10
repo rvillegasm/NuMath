@@ -26,6 +26,10 @@
 
 #include "src/differentiation/differentiation.h"
 
+#include "src/integration/trapezium.h"
+#include "src/integration/simpsonOneThird.h"
+#include "src/integration/simpsonThreeEighths.h"
+
 #include "lib/errorFunctions.h"
 #include "lib/interval.h"
 #include "lib/piecewiseFunction.h"

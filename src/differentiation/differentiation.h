@@ -2,6 +2,7 @@
 #include "../../lib/point.h"
 #include <vector>
 namespace numath{
+    namespace differentiation{
     /**
      *   Method that finds the derivative at a certain point given the values ​​of nearby points
      *   @param points Close points
@@ -9,5 +10,6 @@ namespace numath{
      *   @param h Point spacing 
      *   @param num Number of points with which the derivative will be calculated
      */
-double differentiation(std::vector<Point> &points, int direction, double h, int num);
+    double differentiation(std::vector<Point> &points, int direction, double h, int num);
+    } 
 }
