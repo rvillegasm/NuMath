@@ -17,11 +17,12 @@ namespace numath {
                                                                          std::vector<double>&),
                                            double (*errorFunc)(std::vector<double>&,
                                                                std::vector<double>&),
+                                           double lambda,
                                            std::vector<std::vector<double>> &table) {
 
             int count;
             double dispersion;
-            std::vector<double> x0 (initialValues), x1;
+            std::vector<double> x0 (initialValues), x1, lastX1;
 
             count = 0;
             dispersion = tol + 1;
@@ -33,7 +34,15 @@ namespace numath {
             // ---------------------
 
             while (dispersion > tol && count < nIter) {
+                if (count != 0) {
+                    lastX1 = x1;
+                }
                 x1 = method(x0, A, b);
+                if (count != 0 ) {
+                    for (unsigned int i = 0; i < x1.size(); i++) {
+                        x1[i] = lambda * x1[i] + (1 - lambda) * lastX1[i]; 
+                    }
+                }
                 dispersion = errorFunc(x1, x0);
                 x0 = x1;
                 count++;

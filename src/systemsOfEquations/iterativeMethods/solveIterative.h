@@ -16,6 +16,7 @@ namespace numath {
          * @param nIter Desired maximum number of iterations.
          * @param method Function specifying the method to be used.
          * @param errorFunc Function used to calculate the dispersion of the method.
+         * @param lambda Relaxation parameter (between 0 and 1)
          * 
          * @throw IterException if the number of iterations runs out without being able to surpass the tolerance.
          *          
@@ -30,6 +31,7 @@ namespace numath {
                                                                          std::vector<double>&),
                                            double (*errorFunc)(std::vector<double>&,
                                                                std::vector<double>&),
+                                           double lambda,
                                            std::vector<std::vector<double>> &table);
 
     }

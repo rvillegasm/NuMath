@@ -13,8 +13,8 @@ namespace numath {
             std::vector<double> results (indepTerms.size());
             const int N = variables.size();
 
-            // Each thread calculate one value in the results vector,
-            // private copy of sum so each has a
+            // Each thread calculate one value in the results vector
+            // Private copy of sum so each thread has it's own value
             #pragma omp parallel for private(sum)
             for (int i = 0; i < N; i++) {
                 
