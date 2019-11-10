@@ -3,9 +3,7 @@
 
 #include "../../../lib/exceptions.h"
 
-// #include <iostream>
-#include <iostream>
-#include <cstdlib>
+#include <cmath>
 
 namespace numath {
     namespace systemsOfEquations {
@@ -27,15 +25,15 @@ namespace numath {
         void __forwardEliminationPP(std::vector<std::vector<double>> &augmentedMatrix) {
             const int N = augmentedMatrix.size();
             // Phase cicle
-            printf("Original Matrix\n");
+            // printf("Original Matrix\n");
             for (int k = 1; k <= N-1; k++) {
                 //toStringMatrixGP(augmentedMatrix);
                 //printf("Partial Pivot\n");
                 __partialPivot(augmentedMatrix,k,N);
-                toStringMatrixGP(augmentedMatrix);
-                printf("Phase %d \n",k);
+                // toStringMatrixGP(augmentedMatrix);
+                // printf("Phase %d \n",k);
                 // Row cicle
-                #pragma omp parallel for
+                #pragma omp parallel for shared(augmentedMatrix, k)
                 for(int i = k + 1; i <= N; i++) {
 
                     double multDenominator = augmentedMatrix[k-1][k-1];
@@ -55,11 +53,12 @@ namespace numath {
         }
 
         void __partialPivot(std::vector<std::vector<double>> &augmentedMatrix,int k, int n){
-            double maxElement=abs(augmentedMatrix[k-1][k-1]);
+            double maxElement = fabs(augmentedMatrix[k-1][k-1]);
             int maxRow = k-1;
             // Finds the major element and the row in which it's found
-            for(int s =k-1;s<n;s++){
-                double newElement = abs(augmentedMatrix[s][k-1]);
+            #pragma omp parallel for shared(maxElement, maxRow, k, n)
+            for(int s = k-1; s<n; s++){
+                double newElement = fabs(augmentedMatrix[s][k-1]);
                 if(newElement>maxElement){
                     maxElement=newElement;
                     maxRow =s;
@@ -85,7 +84,7 @@ namespace numath {
         std::vector<double> __backwardSubstitutionPP(std::vector<std::vector<double>> &augmentedTriangularMatrix) {
             const int N = augmentedTriangularMatrix.size();
             //printf("Backward Substitution over: \n");
-            toStringMatrixGP(augmentedTriangularMatrix);
+            // toStringMatrixGP(augmentedTriangularMatrix);
             std::vector<double> results(N, 0.0);
             // Inverse row cicle
             for (int i = N; i > 0; i--) {
@@ -109,15 +108,15 @@ namespace numath {
         }
 
 
-        void toStringMatrixGP(std::vector<std::vector<double>> &augmentedMatrix) {
-            for (unsigned int i = 0; i < augmentedMatrix.size(); i++) {
-                for(unsigned int j = 0; j < augmentedMatrix[0].size(); j++) {
-                    printf("%f ",augmentedMatrix[i][j]);
-                }
-                printf("\n");
-            }
-            printf("\n");
-        }
+        // void toStringMatrixGP(std::vector<std::vector<double>> &augmentedMatrix) {
+        //     for (unsigned int i = 0; i < augmentedMatrix.size(); i++) {
+        //         for(unsigned int j = 0; j < augmentedMatrix[0].size(); j++) {
+        //             printf("%f ",augmentedMatrix[i][j]);
+        //         }
+        //         printf("\n");
+        //     }
+        //     printf("\n");
+        // }
 
     }
 }
