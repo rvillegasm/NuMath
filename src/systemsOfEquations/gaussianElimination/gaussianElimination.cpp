@@ -1,5 +1,4 @@
 #include <omp.h>
-#include <cstdio>
 
 #include "gaussianElimination.h"
 
@@ -27,13 +26,12 @@ namespace numath {
             const int N = augmentedMatrix.size();
             double multDenominator,multiplier;
             // Phase cicle
-            printf("Original Matrix \n");
+            // printf("Original Matrix \n");
             for (int k = 1; k <= N-1; k++) {
-                toStringMatrixGE(augmentedMatrix);
-                printf("Phase %d \n",k);
+                // toStringMatrixGE(augmentedMatrix);
+                // printf("Phase %d \n",k);
                 // Row cicle
-                //#pragma omp parallel for schedule(static,10) default(none) shared(augmentedMatrix,k) private(multDenominator,multiplier)
-                #pragma omp parallel for
+                #pragma omp parallel for shared(augmentedMatrix, k) private(multDenominator, multiplier)
                 for(int i = k + 1; i <= N; i++) {
                     multDenominator = augmentedMatrix[k-1][k-1];
                     if (multDenominator == 0) {
@@ -53,7 +51,7 @@ namespace numath {
         std::vector<double> __backwardSubstitution(std::vector<std::vector<double>> &augmentedTriangularMatrix) {
             const int N = augmentedTriangularMatrix.size();
             //printf("Backward Substitution over: \n");
-            toStringMatrixGE(augmentedTriangularMatrix);
+            // toStringMatrixGE(augmentedTriangularMatrix);
             std::vector<double> results(N, 0.0);
             // Inverse row cicle
             for (int i = N; i > 0; i--) {
@@ -74,15 +72,15 @@ namespace numath {
         }
 
 
-        void toStringMatrixGE(std::vector<std::vector<double>> &augmentedMatrix) {
-            for (unsigned int i = 0; i < augmentedMatrix.size(); i++) {
-                for(unsigned int j = 0; j < augmentedMatrix[0].size(); j++) {
-                    printf("%f ",augmentedMatrix[i][j]);
-                }
-                printf("\n");
-            }
-            printf("\n");
-        }
+        // void toStringMatrixGE(std::vector<std::vector<double>> &augmentedMatrix) {
+        //     for (unsigned int i = 0; i < augmentedMatrix.size(); i++) {
+        //         for(unsigned int j = 0; j < augmentedMatrix[0].size(); j++) {
+        //             printf("%f ",augmentedMatrix[i][j]);
+        //         }
+        //         printf("\n");
+        //     }
+        //     printf("\n");
+        // }
 
     }
 }
