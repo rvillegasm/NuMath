@@ -2,7 +2,7 @@
 
 #include <fstream>
 #include <vector>
-#include "../../lib/interval.h"
+#include "interval.h"
 
 namespace numath {
     namespace singleVariableEquations {

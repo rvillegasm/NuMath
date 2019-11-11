@@ -2,8 +2,8 @@
 
 #include <string>
 #include <vector>
-#include "../../lib/point.h"
-#include "../../lib/piecewiseFunction.h"
+#include "point.h"
+#include "piecewiseFunction.h"
 
 namespace numath {
     namespace interpolation {

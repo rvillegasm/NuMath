@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 #include <utility>
-#include "../../lib/point.h"
+#include "point.h"
 
 namespace numath {
     namespace interpolation {

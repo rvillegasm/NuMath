@@ -1,5 +1,5 @@
 #pragma once
-#include "../../lib/point.h"
+#include "point.h"
 #include <vector>
 
 namespace numath {

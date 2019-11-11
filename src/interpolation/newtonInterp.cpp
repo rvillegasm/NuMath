@@ -1,8 +1,7 @@
-#include "newton.h"
+#include "newtonInterp.h"
 
 #include <vector>
 #include <string>
-#include "../../lib/point.h"
 
 namespace numath{
     namespace interpolation {
