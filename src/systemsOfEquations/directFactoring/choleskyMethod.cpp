@@ -4,7 +4,6 @@
 #include <math.h>
 
 #include "../../../lib/exceptions.h"
-#include <iostream>
 
 namespace numath {
     namespace systemsOfEquations {
@@ -20,16 +19,16 @@ namespace numath {
             try
             {
                 __LUFactoringCH(A, L, U, N);
-                printf("Final L matrix\n");
-                toStringMatrixCH(L);
-                printf("Final U matrix\n");
-                toStringMatrixCH(U);
+                // printf("Final L matrix\n");
+                // toStringMatrixCH(L);
+                // printf("Final U matrix\n");
+                // toStringMatrixCH(U);
                 std::vector<double> z = __forwardSubstitutionCHM(L, b);
-                printf("z vector\n");
-                for(double e: z){
-                    printf("%f ",e);
-                }
-                printf("\n\n");
+                // printf("z vector\n");
+                // for(double e: z){
+                //     printf("%f ",e);
+                // }
+                // printf("\n\n");
                 results = __backwardSubstitutionCHM(U, z);
             }
             catch (DenominatorException &ex)
@@ -42,6 +41,8 @@ namespace numath {
         void __initializeMatrixCH(std::vector<std::vector<double>> &L, std::vector<std::vector<double>> &U)
         {
             int N = L.size();
+            
+            #pragma omp parallel for
             for (int i = 0; i < N; i++)
             {
                 for (int j = 0; j < N; j++)
@@ -68,11 +69,13 @@ namespace numath {
         void __LUFactoringCH(std::vector<std::vector<double>> &A, std::vector<std::vector<double>> &L, std::vector<std::vector<double>> &U, int N)
         {
             for(int k = 1; k < N+1; k++){
-                printf("Phase %d\n\n",k);
-                toStringIncMatrixCH(L,'L');
-                toStringIncMatrixCH(U,'U');
+                // printf("Phase %d\n\n",k);
+                // toStringIncMatrixCH(L,'L');
+                // toStringIncMatrixCH(U,'U');
                 
                     double sum = 0;
+
+                    #pragma omp parallel for reduction(+:sum)
                     for(int p = 0; p < k-1; p++){
                         sum += L[k-1][p] * U[p][k-1];
                     }
@@ -81,6 +84,8 @@ namespace numath {
                     
                     for(int j = k+1; j < N+1; j++){
                         sum = 0;
+
+                        #pragma omp parallel for reduction(+:sum)
                         for(int p = 0; p < k-1; p++){
                             
                             sum += L[j-1][p] * U[p][k-1];
@@ -90,6 +95,8 @@ namespace numath {
                     
                     for(int i = k+1; i < N+1; i++){
                         sum = 0;
+
+                        #pragma omp parallel for reduction(+:sum)
                         for(int p = 0; p < k-1; p++){
                             sum += L[k-1][p] * U[p][i-1];
                         }
@@ -149,43 +156,43 @@ namespace numath {
             return x;
         }
 
-        void toStringMatrixCH(std::vector<std::vector<double>> &matrix)
-        {
-            for (unsigned int i = 0; i < matrix.size(); i++)
-            {
-                for (unsigned int j = 0; j < matrix[0].size(); j++)
-                {
-                    printf("%f ",matrix[i][j]);
-                }
-                std::cout << std::endl;
+        // void toStringMatrixCH(std::vector<std::vector<double>> &matrix)
+        // {
+        //     for (unsigned int i = 0; i < matrix.size(); i++)
+        //     {
+        //         for (unsigned int j = 0; j < matrix[0].size(); j++)
+        //         {
+        //             printf("%f ",matrix[i][j]);
+        //         }
+        //         std::cout << std::endl;
                 
-            }
-            printf("\n");
-        } 
+        //     }
+        //     printf("\n");
+        // } 
 
         //Prints incomplete matrix with equal spacing
-        void toStringIncMatrixCH(std::vector<std::vector<double>> &matrix, char name)
-        {
-            printf("%c matrix\n",name);
-            for (unsigned int i = 0; i < matrix.size(); i++)
-            {
-                for (unsigned int j = 0; j < matrix[0].size(); j++)
-                {
-                    if(matrix[i][j]==DBL_MAX){
-                        if(i==j){
-                            printf("%6c%d%d ",'L',j+1,i+1);
-                        }else{
-                        printf("%6c%d%d ",name,j+1,i+1);
-                        }
-                    }else{
-                        printf("%.6f ",matrix[i][j]);
-                    }
-                }
-                std::cout << std::endl;
+        // void toStringIncMatrixCH(std::vector<std::vector<double>> &matrix, char name)
+        // {
+        //     printf("%c matrix\n",name);
+        //     for (unsigned int i = 0; i < matrix.size(); i++)
+        //     {
+        //         for (unsigned int j = 0; j < matrix[0].size(); j++)
+        //         {
+        //             if(matrix[i][j]==DBL_MAX){
+        //                 if(i==j){
+        //                     printf("%6c%d%d ",'L',j+1,i+1);
+        //                 }else{
+        //                 printf("%6c%d%d ",name,j+1,i+1);
+        //                 }
+        //             }else{
+        //                 printf("%.6f ",matrix[i][j]);
+        //             }
+        //         }
+        //         std::cout << std::endl;
                 
-            }
-            printf("\n");
-        } 
+        //     }
+        //     printf("\n");
+        // } 
 
     }
 }

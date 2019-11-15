@@ -33,7 +33,7 @@ namespace numath {
                 // toStringMatrixGP(augmentedMatrix);
                 // printf("Phase %d \n",k);
                 // Row cicle
-                #pragma omp parallel for shared(augmentedMatrix, k)
+                #pragma omp parallel for shared(augmentedMatrix, k) 
                 for(int i = k + 1; i <= N; i++) {
 
                     double multDenominator = augmentedMatrix[k-1][k-1];

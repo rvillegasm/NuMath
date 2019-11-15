@@ -39,7 +39,7 @@ namespace numath {
                     else {
                         multiplier = augmentedMatrix[i-1][k-1] / multDenominator;
                         // Column cicle
-                        #pragma omp parallel for
+                        // #pragma omp parallel for
                         for (int j = k; j <= N + 1; j++) {
                             augmentedMatrix[i-1][j-1] = augmentedMatrix[i-1][j-1] - (multiplier * augmentedMatrix[k-1][j-1]);
                         }

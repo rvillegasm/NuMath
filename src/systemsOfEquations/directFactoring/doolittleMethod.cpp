@@ -3,7 +3,6 @@
 #include <cfloat>
 
 #include "../../../lib/exceptions.h"
-#include <iostream>
 
 namespace numath {
     namespace systemsOfEquations {
@@ -18,17 +17,17 @@ namespace numath {
 
             try
             {
-                __LUFactoringDM(A, L, U, N);
-                printf("Final L matrix\n");
-                toStringMatrixD(L);
-                printf("Final U matrix\n");
-                toStringMatrixD(U);
+                // __LUFactoringDM(A, L, U, N);
+                // printf("Final L matrix\n");
+                // toStringMatrixD(L);
+                // printf("Final U matrix\n");
+                // toStringMatrixD(U);
                 std::vector<double> z = __forwardSubstitutionDM(L, b);
-                printf("z vector\n");
-                for(double e: z){
-                    printf("%f ",e);
-                }
-                printf("\n\n");
+                // printf("z vector\n");
+                // for(double e: z){
+                //     printf("%f ",e);
+                // }
+                // printf("\n\n");
                 results = __backwardSubstitutionDM(U, z);
             }
             catch (DenominatorException &ex)
@@ -41,6 +40,7 @@ namespace numath {
         void __initializeMatrixDM(std::vector<std::vector<double>> &L, std::vector<std::vector<double>> &U)
         {
             int N = L.size();
+            #pragma omp parallel for
             for (int i = 0; i < N; i++)
             {
                 for (int j = 0; j < N; j++)
@@ -68,10 +68,12 @@ namespace numath {
         {
             for (int k = 1; k < N + 1; k++)
             {
-                printf("Phase %d\n\n",k);
-                toStringIncMatrixD(L,'L');
-                toStringIncMatrixD(U,'U');
+                // printf("Phase %d\n\n",k);
+                // toStringIncMatrixD(L,'L');
+                // toStringIncMatrixD(U,'U');
                 double sum = 0;
+
+                #pragma omp parallel for reduction(+:sum)
                 for (int p = 0; p < k - 1; p++)
                 {
                     sum += L[k - 1][p] * U[p][k - 1];
@@ -81,6 +83,8 @@ namespace numath {
                 for (int j = k + 1; j < N + 1; j++)
                 {
                     sum = 0;
+                    
+                    #pragma omp parallel for reduction(+:sum)
                     for (int p = 0; p < k - 1; p++)
                     {
 
@@ -92,6 +96,8 @@ namespace numath {
                 for (int i = k + 1; i < N + 1; i++)
                 {
                     sum = 0;
+
+                    #pragma omp parallel for reduction(+:sum)
                     for (int p = 0; p < k - 1; p++)
                     {
                         sum += L[i - 1][p] * U[p][k - 1];
@@ -149,42 +155,42 @@ namespace numath {
             return x;
         }
 
-        void toStringMatrixD(std::vector<std::vector<double>> &matrix)
-        {
-            for (unsigned int i = 0; i < matrix.size(); i++)
-            {
-                for (unsigned int j = 0; j < matrix[0].size(); j++)
-                {
-                    printf("%f ",matrix[i][j]);
-                }
-                std::cout << std::endl;
+        // void toStringMatrixD(std::vector<std::vector<double>> &matrix)
+        // {
+        //     for (unsigned int i = 0; i < matrix.size(); i++)
+        //     {
+        //         for (unsigned int j = 0; j < matrix[0].size(); j++)
+        //         {
+        //             printf("%f ",matrix[i][j]);
+        //         }
+        //         std::cout << std::endl;
                 
-            }
-            printf("\n");
-        } 
+        //     }
+        //     printf("\n");
+        // } 
 
 
-        //Prints incomplete matrix with equal spacing
-        void toStringIncMatrixD(std::vector<std::vector<double>> &matrix, char name)
-        {
-            printf("%c matrix\n",name);
-            for (unsigned int i = 0; i < matrix.size(); i++)
-            {
-                for (unsigned int j = 0; j < matrix[0].size(); j++)
-                {
-                    if(matrix[i][j]==DBL_MAX){
+        // //Prints incomplete matrix with equal spacing
+        // void toStringIncMatrixD(std::vector<std::vector<double>> &matrix, char name)
+        // {
+        //     printf("%c matrix\n",name);
+        //     for (unsigned int i = 0; i < matrix.size(); i++)
+        //     {
+        //         for (unsigned int j = 0; j < matrix[0].size(); j++)
+        //         {
+        //             if(matrix[i][j]==DBL_MAX){
                         
-                        printf("%6c%d%d ",name,j+1,i+1);
+        //                 printf("%6c%d%d ",name,j+1,i+1);
                         
-                    }else{
-                        printf("%.6f ",matrix[i][j]);
-                    }
-                }
-                std::cout << std::endl;
+        //             }else{
+        //                 printf("%.6f ",matrix[i][j]);
+        //             }
+        //         }
+        //         std::cout << std::endl;
                 
-            }
-            printf("\n");
-        } 
+        //     }
+        //     printf("\n");
+        // } 
 
     }
 }
