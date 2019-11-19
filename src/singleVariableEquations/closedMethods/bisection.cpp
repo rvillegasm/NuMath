@@ -56,7 +56,7 @@ namespace numath {
 
                     // Add info to the table
                     std::vector<double> iterVector2 = {(double) count, xm, fxm, error};
-                    table.push_back(iterVector1);
+                    table.push_back(iterVector2);
                     // ---------------------
                 }
                 if (fxm == 0) {

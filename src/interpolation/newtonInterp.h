@@ -12,8 +12,9 @@ namespace numath{
          * given point using Newton's method.
          * 
          * @param points points to calculate the polynomial.
+         * @param finalTable Table in which the calculated values will be stored
          */
-        std::string newton(std::vector<numath::Point> &points);
+        std::string newton(std::vector<numath::Point> &points, std::vector<std::vector<double>> &finalTable);
 
     }
 }
