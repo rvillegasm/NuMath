@@ -6,7 +6,7 @@
 namespace numath{
     namespace interpolation {
 
-        std::string newton(std::vector<numath::Point> &points, std::vector<std::vector<double>> &finalTable) {
+        std::string newton(std::vector<numath::Point> &points) {
 
             const unsigned int N = points.size();
             double table[N][N];
@@ -23,16 +23,6 @@ namespace numath{
                     table[i][j] = (table[i][j-1] - table[i-1][j-1]) / (points[i].x - points[i-j].x);
                 }
             }
-
-            // Add the local table to the one passed as a parameter
-            for (unsigned int i = 0; i < N; i++) {
-                std::vector<double> row;
-                for (unsigned int j = 0; j < N; j++) {
-                    row.push_back(table[i][j]);
-                }
-                finalTable.push_back(row);
-            }
-            // -----------------------------------------------------
 
             // Build the polynomial
             for (unsigned int i = 0; i < N; i++) {
