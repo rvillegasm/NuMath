@@ -26,7 +26,7 @@ namespace numath{
 
             // Build the polynomial
             for (unsigned int i = 0; i < N; i++) {
-                // calculate each term of the polynomial
+                // calculate each term of the polynomial equation
                 std::string term;
                 if (i == 0) {
                     term = std::to_string(table[i][i]);
